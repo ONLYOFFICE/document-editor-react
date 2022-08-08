@@ -24,6 +24,11 @@ type DocumentEditorProps = {
   height?: string,
   type?: string;
   width?: string;
+
+  events_onAppReady?: (editor: object) => void;
+  events_onDocumentReady?: (editor: object) => void;
+  events_onDocumentStateChange?: (data: object) => void;
+  events_onError?: (error: string) => void;
 };
 
 const DocumentEditor = (props: DocumentEditorProps) => {
@@ -41,6 +46,11 @@ const DocumentEditor = (props: DocumentEditorProps) => {
     height,
     type,
     width,
+
+    events_onAppReady,
+    events_onDocumentReady,
+    events_onDocumentStateChange,
+    events_onError,
   } = props;
 
   useEffect(() => {
@@ -103,6 +113,12 @@ const DocumentEditor = (props: DocumentEditorProps) => {
         editorConfig: {
           lang: editorConfig_lang,
         },
+        events: {
+          onAppReady: events_onAppReady,
+          onDocumentReady,
+          onDocumentStateChange: events_onDocumentStateChange,
+          onError: events_onError,
+        },
         height,
         type,
         width,
@@ -112,7 +128,12 @@ const DocumentEditor = (props: DocumentEditorProps) => {
       window.DocEditor.instances[id] = editor;
     } catch (err: any) {
       console.error(err);
+      events_onError!(err);
     }
+  };
+
+  const onDocumentReady = () => {
+    events_onDocumentReady!(window.DocEditor.instances[id]);
   };
 
   return <div id={id}></div>;

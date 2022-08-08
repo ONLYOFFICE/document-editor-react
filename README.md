@@ -45,6 +45,14 @@ Properties:
 
 `editorConfig_lang` - the editor interface language
 
+`events_onAppReady` - the application is loaded into the browser
+
+`events_onDocumentReady` - the document is loaded into the document editor
+
+`events_onDocumentStateChange` - the document is modified
+
+`events_onError` - an error or some other specific event occurs
+
 `height` - the document height in the browser window
 
 `type` - the platform type used to access the document
