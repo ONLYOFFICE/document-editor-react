@@ -9,6 +9,10 @@ Test component:
 Create package:
 `yarn rollup && npm pack`
 
+Storybook build: `yarn build-storybook`
+
+Storybook start: `yarn storybook`
+
 Example:
 ```
 <DocumentEditor
