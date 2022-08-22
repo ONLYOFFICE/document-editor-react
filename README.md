@@ -35,4 +35,18 @@ Properties:
 
 `documentserverUrl` - address ONLYOFFICE Document Server
 
-`config` - generic configuration object for opening a file
+`config` - generic configuration object for opening a file with token
+
+`document_fileType` - the type of the file
+
+`document_title` - the file name
+
+`documentType` - the document type
+
+`editorConfig_lang` - the editor interface language
+
+`height` - the document height in the browser window
+
+`type` - the platform type used to access the document
+
+`width` - the document width in the browser window

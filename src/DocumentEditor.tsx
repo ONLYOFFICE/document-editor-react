@@ -16,6 +16,14 @@ type DocumentEditorProps = {
   documentserverUrl: string;
 
   config: Config;
+
+  document_fileType?: string;
+  document_title?: string;
+  documentType?: string;
+  editorConfig_lang?: string,
+  height?: string,
+  type?: string;
+  width?: string;
 };
 
 const DocumentEditor = (props: DocumentEditorProps) => {
@@ -25,6 +33,14 @@ const DocumentEditor = (props: DocumentEditorProps) => {
     documentserverUrl,
 
     config,
+
+    document_fileType,
+    document_title,
+    documentType,
+    editorConfig_lang,
+    height,
+    type,
+    width,
   } = props;
 
   useEffect(() => {
@@ -39,6 +55,14 @@ const DocumentEditor = (props: DocumentEditorProps) => {
     documentserverUrl,
 
     JSON.stringify(config),
+
+    document_fileType,
+    document_title,
+    documentType,
+    editorConfig_lang,
+    height,
+    type,
+    width,
   ]);
 
   useEffect(() => {
@@ -70,7 +94,19 @@ const DocumentEditor = (props: DocumentEditorProps) => {
         window.DocEditor = { instances: {} };
       }
 
-      let initConfig = config || {};
+      let initConfig = Object.assign({
+        document: {
+          fileType: document_fileType,
+          title: document_title,
+        },
+        documentType,
+        editorConfig: {
+          lang: editorConfig_lang,
+        },
+        height,
+        type,
+        width,
+      }, config || {});
 
       const editor = window.DocsAPI.DocEditor(id, initConfig);
       window.DocEditor.instances[id] = editor;
@@ -83,6 +119,8 @@ const DocumentEditor = (props: DocumentEditorProps) => {
 };
 
 DocumentEditor.defaultProps = {
+  height: "100%",
+  width: "100%",
 };
 
 export default DocumentEditor;
