@@ -41,6 +41,21 @@ export default {
 
 const Template: ComponentStory<typeof DocumentEditor> = (args) => <DocumentEditor {...args} />
 
+export const FormTemplate = Template.bind({});
+FormTemplate.storyName = "Form";
+FormTemplate.args = {
+    id: "oformEditor",
+    documentserverUrl: "http://documentserver/",
+    config: {
+        document: {
+            fileType: "oform",
+            title: "demo.oform",
+            url: "https://d2nlctn12v279m.cloudfront.net/assets/docs/samples/demo.oform",
+        },
+        documentType: "word",
+    },
+};
+
 export const DocumentTemplate = Template.bind({});
 DocumentTemplate.storyName = "Document";
 DocumentTemplate.args = {
