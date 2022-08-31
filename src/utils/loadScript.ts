@@ -11,19 +11,19 @@ const loadScript = async (url: string, id: string) => {
 
           return resolve(null);
         }, 500);
+      } else {
+        const script = document.createElement("script");
+        script.setAttribute("type", "text/javascript");
+        script.setAttribute("id", id);
+
+        script.onload = resolve;
+        script.onerror = reject;
+
+        script.src = url;
+        script.async = true;
+
+        document.body.appendChild(script);
       }
-
-      const script = document.createElement("script");
-      script.setAttribute("type", "text/javascript");
-      script.setAttribute("id", id);
-
-      script.onload = resolve;
-      script.onerror = reject;
-
-      script.src = url;
-      script.async = true;
-
-      document.body.appendChild(script);
     } catch (e) {
       console.error(e);
     }
