@@ -96,7 +96,7 @@ const DocumentEditor = (props: DocumentEditorProps) => {
     try {
       if (!window.DocsAPI) throw new Error("DocsAPI is not defined");
       if (window?.DocEditor?.instances[id]) {
-        console.log("Skip loading editor. Instance already exists", id);
+        console.log("Skip loading. Instance already exists", id);
         return;
       }
 
@@ -115,7 +115,7 @@ const DocumentEditor = (props: DocumentEditorProps) => {
         },
         events: {
           onAppReady: events_onAppReady,
-          onDocumentReady,
+          onDocumentReady: events_onDocumentReady,
           onDocumentStateChange: events_onDocumentStateChange,
           onError: events_onError,
         },
@@ -130,10 +130,6 @@ const DocumentEditor = (props: DocumentEditorProps) => {
       console.error(err);
       events_onError!(err);
     }
-  };
-
-  const onDocumentReady = () => {
-    events_onDocumentReady!(window.DocEditor.instances[id]);
   };
 
   return <div id={id}></div>;
