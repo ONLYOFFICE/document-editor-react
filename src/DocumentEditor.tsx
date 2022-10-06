@@ -25,10 +25,25 @@ type DocumentEditorProps = {
   type?: string;
   width?: string;
 
-  events_onAppReady?: (editor: object) => void;
-  events_onDocumentReady?: (editor: object) => void;
-  events_onDocumentStateChange?: (data: object) => void;
-  events_onError?: (error: string) => void;
+  events_onAppReady?: (event: object) => void;
+  events_onDocumentStateChange?: (event: object) => void;
+  events_onMetaChange?: (event: object) => void;
+  events_onDocumentReady?: (event: object) => void;
+  events_onInfo?: (event: object) => void;
+  events_onWarning?: (event: object) => void;
+  events_onError?: (event: object) => void;
+  events_onRequestSharingSettings?: (event: object) => void;
+  events_onRequestRename?: (event: object) => void;
+  events_onMakeActionLink?: (event: object) => void;
+  events_onRequestInsertImage?: (event: object) => void;
+  events_onRequestSaveAs?: (event: object) => void;
+  events_onRequestMailMergeRecipients?: (event: object) => void;
+  events_onRequestCompareFile?: (event: object) => void;
+  events_onRequestEditRights?: (event: object) => void;
+  events_onRequestHistory?: (event: object) => void;
+  events_onRequestHistoryClose?: (event: object) => void;
+  events_onRequestHistoryData?: (event: object) => void;
+  events_onRequestRestore?: (event: object) => void;
 };
 
 const DocumentEditor = (props: DocumentEditorProps) => {
@@ -48,9 +63,24 @@ const DocumentEditor = (props: DocumentEditorProps) => {
     width,
 
     events_onAppReady,
-    events_onDocumentReady,
     events_onDocumentStateChange,
+    events_onMetaChange,
+    events_onDocumentReady,
+    events_onInfo,
+    events_onWarning,
     events_onError,
+    events_onRequestSharingSettings,
+    events_onRequestRename,
+    events_onMakeActionLink,
+    events_onRequestInsertImage,
+    events_onRequestSaveAs,
+    events_onRequestMailMergeRecipients,
+    events_onRequestCompareFile,
+    events_onRequestEditRights,
+    events_onRequestHistory,
+    events_onRequestHistoryClose,
+    events_onRequestHistoryData,
+    events_onRequestRestore
   } = props;
 
   useEffect(() => {
@@ -115,9 +145,24 @@ const DocumentEditor = (props: DocumentEditorProps) => {
         },
         events: {
           onAppReady: events_onAppReady,
-          onDocumentReady: events_onDocumentReady,
           onDocumentStateChange: events_onDocumentStateChange,
+          onMetaChange: events_onMetaChange,
+          onDocumentReady: events_onDocumentReady,
+          onInfo: events_onInfo,
+          onWarning: events_onWarning,
           onError: events_onError,
+          onRequestSharingSettings: events_onRequestSharingSettings,
+          onRequestRename: events_onRequestRename,
+          onMakeActionLink: events_onMakeActionLink,
+          onRequestInsertImage: events_onRequestInsertImage,
+          onRequestSaveAs: events_onRequestSaveAs,
+          onRequestMailMergeRecipients: events_onRequestMailMergeRecipients,
+          onRequestCompareFile: events_onRequestCompareFile,
+          onRequestEditRights: events_onRequestEditRights,
+          onRequestHistory: events_onRequestHistory,
+          onRequestHistoryClose: events_onRequestHistoryClose,
+          onRequestHistoryData: events_onRequestHistoryData,
+          onRequestRestore: events_onRequestRestore
         },
         height,
         type,
