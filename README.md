@@ -1,20 +1,31 @@
-React component for ONLYOFFICE Document Server
+# @onlyoffice/document-editor-react
 
-Install the project dependencies:
-`yarn install`
+> React component for ONLYOFFICE Document Server
 
-Test component:
-`yarn test`
+## Installation
+Install it from npm in your project.
 
-Create package:
-`yarn rollup && npm pack`
-
-Storybook build: `yarn build-storybook`
-
-Storybook start: `yarn storybook`
-
-Example:
+```bash
+npm install --save @onlyoffice/document-editor-react
 ```
+or:
+```bash
+yarn add @onlyoffice/document-editor-react
+```
+
+## Usage
+
+Component usage example:
+```
+...
+import { DocumentEditor } from "@onlyoffice/document-editor-react";
+...
+...
+var onDocumentReady = function (event) {
+    console.log("Document is loaded");
+};
+...
+...
 <DocumentEditor
   id="docxEditor"
   documentserverUrl="http://documentserver/"
@@ -30,35 +41,72 @@ Example:
       "callbackUrl": "https://example.com/url-to-callback.ashx"
     }
   }}
+  events_onDocumentReady={onDocumentReady}
 />
+...
 ```
 
-Properties:
+## API
+### Props
+| Name | Type | Default | Required | Description |
+| ------------- | ------------- | ------------- | ------------- | ------------- |
+| id | string | null | yes | Component unique identifier. |
+| documentserverUrl | string | null | yes | Address ONLYOFFICE Document Server. |
+| config | object | null | yes | Generic configuration object for opening a file with token. [Config API](https://api.onlyoffice.com/editors/config/) | |
+| document_fileType | string | null | no | The type of the file. |
+| document_title | string | null | no | The file name. |
+| documentType | string | null | no | The document type. |
+| type | string | null | no | Defines the platform type used to access the document (desktop, mobile or embedded). |
+| width | string | null | no | Defines the document width in the browser window. |
+| events_onAppReady | (event: object) => void | null | no | The function called when the application is loaded into the browser. |
+| events_onDocumentStateChange  | (event: object) => void | null | no | The function called when the document is modified. |
+| events_onMetaChange | (event: object) => void | null | no | The function called when the meta information of the document is changed via the meta command. |
+| events_onDocumentReady | (event: object) => void | null | no | The function called when the document is loaded into the document editor. |
+| events_onInfo | (event: object) => void | null | no | The function called when the application opened the file. |
+| events_onWarning| (event: object) => void | null | no | The function called when a warning occurs. |
+| events_onError | (event: object) => void | null | no | The function called when an error or some other specific event occurs. |
+| events_onRequestSharingSettings | (event: object) => void | null | no | The function called when the user is trying to manage document access rights by clicking _Change access rights_ button |
+| events_onRequestRename | (event: object) => void | null | no | The function called when the user is trying to rename the file by clicking the _Rename..._ button. |
+| events_onMakeActionLink | (event: object) => void | null | no | The function called when the user is trying to get link for opening the document which contains a bookmark, scrolling to the bookmark position. |
+| events_onRequestInsertImage | (event: object) => void | null | no | The function called when the user is trying to insert an image by clicking the _Image from Storage_ button. |
+| events_onRequestSaveAs | (event: object) => void | null | no |  The function called when the user is trying to save file by clicking _Save Copy as..._ button.  |
+| events_onRequestMailMergeRecipients  | (event: object) => void | null | no | the function called when the user is trying to select recipients data by clicking the _Mail merge_ button. |
+| events_onRequestCompareFile | (event: object) => void | null | no | The function called when the user is trying to select document for comparing by clicking the _Document from Storage_ button. |
+| events_onRequestEditRights | (event: object) => void | null | no | The function called when the user is trying to switch the document from the viewing into the editing mode by clicking the _Edit Document_ button. |
+| events_onRequestHistory | (event: object) => void | null | no | The function called when the user is trying to show the document version history by clicking the _Version History_ button.  |
+| events_onRequestHistoryClose | (event: object) => void | null | no | The function called when the user is trying to go back to the document from viewing the document version history by clicking the _Close History_ button.  |
+| events_onRequestHistoryData | (event: object) => void | null | no | The function called when the user is trying to click the specific document version in the document version history. |
+| events_onRequestRestore | (event: object) => void | null | no | the function called when the user is trying to restore the file version by clicking the _Restore_ button in the version history. |
 
-`id` - identifier of element
+## Development
 
-`documentserverUrl` - address ONLYOFFICE Document Server
+### Clone project from github repository:
+```
+git clone https://github.com/ONLYOFFICE/document-editor-react
+```
+### Install the project dependencies:
+```
+yarn install
+```
+### Build project:
+```
+yarn rollup
+```
+### Create package:
+```
+npm pack
+```
+### Test component:
+```
+yarn test
+```
+### Storybook build:
+```
+yarn build-storybook
+```
+###Storybook start:
+```
+yarn storybook
+```
 
-`config` - generic configuration object for opening a file with token
 
-`document_fileType` - the type of the file
-
-`document_title` - the file name
-
-`documentType` - the document type
-
-`editorConfig_lang` - the editor interface language
-
-`events_onAppReady` - the application is loaded into the browser
-
-`events_onDocumentReady` - the document is loaded into the document editor
-
-`events_onDocumentStateChange` - the document is modified
-
-`events_onError` - an error or some other specific event occurs
-
-`height` - the document height in the browser window
-
-`type` - the platform type used to access the document
-
-`width` - the document width in the browser window
