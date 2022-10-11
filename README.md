@@ -78,6 +78,22 @@ var onDocumentReady = function (event) {
 | events_onRequestHistoryData | (event: object) => void | null | no | The function called when the user is trying to click the specific document version in the document version history. |
 | events_onRequestRestore | (event: object) => void | null | no | the function called when the user is trying to restore the file version by clicking the _Restore_ button in the version history. |
 
+## Storybook
+
+Change the address of the document server in the *config/default.json* file:
+```
+"documentServerUrl": "http://documentserver/"
+```
+
+### Storybook build:
+```
+yarn build-storybook
+```
+### Storybook start:
+```
+yarn storybook
+```
+
 ## Development
 
 ### Clone project from github repository:
@@ -100,13 +116,3 @@ npm pack
 ```
 yarn test
 ```
-### Storybook build:
-```
-yarn build-storybook
-```
-### Storybook start:
-```
-yarn storybook
-```
-
-
