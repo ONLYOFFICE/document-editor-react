@@ -28,7 +28,7 @@ var onDocumentReady = function (event) {
 ...
 <DocumentEditor
   id="docxEditor"
-  documentserverUrl="http://documentserver/"
+  documentServerUrl="http://documentserver/"
   config={{
     "document": {
       "fileType": "docx",
@@ -51,7 +51,7 @@ var onDocumentReady = function (event) {
 | Name | Type | Default | Required | Description |
 | ------------- | ------------- | ------------- | ------------- | ------------- |
 | id | string | null | yes | Component unique identifier. |
-| documentserverUrl | string | null | yes | Address ONLYOFFICE Document Server. |
+| documentServerUrl | string | null | yes | Address ONLYOFFICE Document Server. |
 | config | object | null | yes | Generic configuration object for opening a file with token. [Config API](https://api.onlyoffice.com/editors/config/) | |
 | document_fileType | string | null | no | The type of the file. |
 | document_title | string | null | no | The file name. |

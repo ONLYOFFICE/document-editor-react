@@ -13,7 +13,7 @@ declare global {
 type DocumentEditorProps = {
   id: string;
 
-  documentserverUrl: string;
+  documentServerUrl: string;
 
   config: Config;
 
@@ -50,7 +50,7 @@ const DocumentEditor = (props: DocumentEditorProps) => {
   const {
     id,
 
-    documentserverUrl,
+    documentServerUrl,
 
     config,
 
@@ -92,7 +92,7 @@ const DocumentEditor = (props: DocumentEditorProps) => {
       onLoad();
     }
   }, [
-    documentserverUrl,
+    documentServerUrl,
 
     JSON.stringify(config),
 
@@ -106,7 +106,7 @@ const DocumentEditor = (props: DocumentEditorProps) => {
   ]);
 
   useEffect(() => {
-    let url = documentserverUrl;
+    let url = documentServerUrl;
     if (!url.endsWith("/")) url += "/";
 
     const docApiUrl = `${url}web-apps/apps/api/documents/api.js`;

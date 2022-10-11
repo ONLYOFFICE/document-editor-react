@@ -8,7 +8,7 @@ describe("DocumentEditor", () => {
     render(
       <DocumentEditor
         id="docxEditor"
-        documentserverUrl="http://documentserver/"
+        documentServerUrl="http://documentserver/"
         config={{
           "document": {
             "fileType": "docx",
