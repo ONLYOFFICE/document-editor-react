@@ -144,7 +144,7 @@ const DocumentEditor = (props: DocumentEditorProps) => {
           lang: editorConfig_lang,
         },
         events: {
-          onAppReady: events_onAppReady,
+          onAppReady: onAppReady,
           onDocumentStateChange: events_onDocumentStateChange,
           onMetaChange: events_onMetaChange,
           onDocumentReady: events_onDocumentReady,
@@ -175,6 +175,10 @@ const DocumentEditor = (props: DocumentEditorProps) => {
       console.error(err);
       events_onError!(err);
     }
+  };
+
+  const onAppReady = () => {
+    events_onAppReady!(window.DocEditor.instances[id]);
   };
 
   return <div id={id}></div>;
