@@ -1,6 +1,6 @@
 # @onlyoffice/document-editor-react
 
-> React component for ONLYOFFICE Document Server
+This repo contains the React component for [ONLYOFFICE Document Server](https://github.com/ONLYOFFICE/DocumentServer).
 
 ## Installation
 Install it from npm in your project.
@@ -51,11 +51,12 @@ var onDocumentReady = function (event) {
 | Name | Type | Default | Required | Description |
 | ------------- | ------------- | ------------- | ------------- | ------------- |
 | id | string | null | yes | Component unique identifier. |
-| documentServerUrl | string | null | yes | Address ONLYOFFICE Document Server. |
+| documentServerUrl | string | null | yes | Address of ONLYOFFICE Document Server. |
 | config | object | null | yes | Generic configuration object for opening a file with token. [Config API](https://api.onlyoffice.com/editors/config/) | |
 | document_fileType | string | null | no | The type of the file. |
 | document_title | string | null | no | The file name. |
 | documentType | string | null | no | The document type. |
+| height | string | null | no | Defines the document height in the browser window. |
 | type | string | null | no | Defines the platform type used to access the document (desktop, mobile or embedded). |
 | width | string | null | no | Defines the document width in the browser window. |
 | events_onAppReady | (event: object) => void | null | no | The function called when the application is loaded into the browser. |
@@ -104,6 +105,10 @@ git clone https://github.com/ONLYOFFICE/document-editor-react
 ```
 yarn install
 ```
+### Test component:
+```
+yarn test
+```
 ### Build project:
 ```
 yarn rollup
@@ -112,7 +117,12 @@ yarn rollup
 ```
 npm pack
 ```
-### Test component:
-```
-yarn test
-```
+
+## Feedback and support
+
+In case you have any issues, questions, or suggestions for the ONLYOFFICE Document Server React component, please refer to the Issues section in this repository.
+
+Official project website: [www.onlyoffice.com](https://www.onlyoffice.com/). 
+
+Support forum: [forum.onlyoffice.com](https://forum.onlyoffice.com/).
+
