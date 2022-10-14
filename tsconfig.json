@@ -11,6 +11,7 @@
     "declarationDir": "types",
     "outDir": "dist",
     "moduleResolution": "node",
+    "resolveJsonModule": true,
     "allowSyntheticDefaultImports": true,
     "emitDeclarationOnly": true
   },

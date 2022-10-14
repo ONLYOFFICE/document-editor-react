@@ -1,6 +1,6 @@
 import React from "react";
 import { ComponentStory, ComponentMeta } from "@storybook/react";
-import config from "../config/default.json";
+import config from "./config/default.json";
 
 import DocumentEditor from "./DocumentEditor";
 
