@@ -66,5 +66,7 @@
     "dist"
   ],
   "types": "dist/index.d.ts",
-  "dependencies": {}
+  "keywords": [
+    "onlyoffice"
+  ]
 }
