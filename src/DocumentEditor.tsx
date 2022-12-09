@@ -15,9 +15,8 @@
 */
 
 import React, { useEffect } from "react";
+import IConfig from "./model/config";
 import loadScript from "./utils/loadScript";
-
-import Config from "./types/Config";
 
 declare global {
   interface Window {
@@ -31,7 +30,7 @@ type DocumentEditorProps = {
 
   documentServerUrl: string;
 
-  config: Config;
+  config: IConfig;
 
   document_fileType?: string;
   document_title?: string;
