@@ -24,6 +24,22 @@ import { DocumentEditor } from "@onlyoffice/document-editor-react";
 var onDocumentReady = function (event) {
     console.log("Document is loaded");
 };
+
+var onLoadComponentError = function (errorCode, errorDescription) {
+    switch(errorCode) {
+        case -1: // Unknown error loading component
+            console.log(errorDescription);
+            break;
+
+        case -2: // Error load DocsAPI from http://documentserver/
+            console.log(errorDescription);
+            break;
+
+        case -3: // DocsAPI is not defined
+            console.log(errorDescription);
+            break;
+    }
+};
 ...
 ...
 <DocumentEditor
@@ -42,6 +58,7 @@ var onDocumentReady = function (event) {
     }
   }}
   events_onDocumentReady={onDocumentReady}
+  onLoadComponentError={onLoadComponentError}
 />
 ...
 ```
