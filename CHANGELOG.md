@@ -1,4 +1,5 @@
 # Change Log
+- added component property onLoadComponentError()
 
 ## 1.1.0
 - added IConfig
