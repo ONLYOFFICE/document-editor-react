@@ -24,6 +24,22 @@ import { DocumentEditor } from "@onlyoffice/document-editor-react";
 var onDocumentReady = function (event) {
     console.log("Document is loaded");
 };
+
+var onLoadComponentError = function (errorCode, errorDescription) {
+    switch(errorCode) {
+        case -1: // Unknown error loading component
+            console.log(errorDescription);
+            break;
+
+        case -2: // Error load DocsAPI from http://documentserver/
+            console.log(errorDescription);
+            break;
+
+        case -3: // DocsAPI is not defined
+            console.log(errorDescription);
+            break;
+    }
+};
 ...
 ...
 <DocumentEditor
@@ -42,6 +58,7 @@ var onDocumentReady = function (event) {
     }
   }}
   events_onDocumentReady={onDocumentReady}
+  onLoadComponentError={onLoadComponentError}
 />
 ...
 ```
@@ -52,7 +69,8 @@ var onDocumentReady = function (event) {
 | ------------- | ------------- | ------------- | ------------- | ------------- |
 | `id` | string | null | yes | Component unique identifier. |
 | `documentServerUrl` | string | null | yes | Address of ONLYOFFICE Document Server. |
-| `config` | object | null | yes | Generic configuration object for opening a file with token. [Config API](https://api.onlyoffice.com/editors/config/) | |
+| `config` | object | null | yes | Generic configuration object for opening a file with token. [Config API](https://api.onlyoffice.com/editors/config/) |
+| `onLoadComponentError` | (errorCode: number, errorDescription: string) => void | null | no | The function called when an error occurs while loading a component |
 | `document_fileType` | string | null | no | The type of the file. |
 | `document_title` | string | null | no | The file name. |
 | `documentType` | string | null | no | The document type. |

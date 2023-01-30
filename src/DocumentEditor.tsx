@@ -1,5 +1,5 @@
 /*
-* (c) Copyright Ascensio System SIA 2022
+* (c) Copyright Ascensio System SIA 2023
 *
 * Licensed under the Apache License, Version 2.0 (the "License");
 * you may not use this file except in compliance with the License.
@@ -40,6 +40,8 @@ type DocumentEditorProps = {
   type?: string;
   width?: string;
 
+  onLoadComponentError?: (errorCode: number, errorDescription: string) => void;
+
   events_onAppReady?: (event: object) => void;
   events_onDocumentStateChange?: (event: object) => void;
   events_onMetaChange?: (event: object) => void;
@@ -76,6 +78,8 @@ const DocumentEditor = (props: DocumentEditorProps) => {
     height,
     type,
     width,
+
+    onLoadComponentError,
 
     events_onAppReady,
     events_onDocumentStateChange,
@@ -127,7 +131,7 @@ const DocumentEditor = (props: DocumentEditorProps) => {
     const docApiUrl = `${url}web-apps/apps/api/documents/api.js`;
     loadScript(docApiUrl, "onlyoffice-api-script")
       .then(() => onLoad())
-      .catch((err) => console.error(err));
+      .catch(() => onError(-2));
 
     return () => {
       if (window?.DocEditor?.instances[id]) {
@@ -139,7 +143,7 @@ const DocumentEditor = (props: DocumentEditorProps) => {
 
   const onLoad = () => {
     try {
-      if (!window.DocsAPI) throw new Error("DocsAPI is not defined");
+      if (!window.DocsAPI) onError(-3);
       if (window?.DocEditor?.instances[id]) {
         console.log("Skip loading. Instance already exists", id);
         return;
@@ -188,9 +192,31 @@ const DocumentEditor = (props: DocumentEditorProps) => {
       window.DocEditor.instances[id] = editor;
     } catch (err: any) {
       console.error(err);
-      events_onError!(err);
+      onError(-1);
     }
   };
+
+  const onError = (errorCode: number) => {
+    let message;
+
+    switch (errorCode) {
+      case -2:
+        message = "Error load DocsAPI from " + documentServerUrl;
+        break;
+      case -3:
+        message = "DocsAPI is not defined";
+        break;
+      default:
+        message = "Unknown error loading component";
+        errorCode = -1;
+    }
+
+    if (typeof onLoadComponentError == "undefined") {
+      console.error(message);
+    } else {
+      onLoadComponentError(errorCode, message);
+    }
+  }
 
   const onAppReady = () => {
     events_onAppReady!(window.DocEditor.instances[id]);
