@@ -1,6 +1,6 @@
 # @onlyoffice/document-editor-react
 
-This repo contains the ONLYOFFICE Docs React component which integrates [ONLYOFFICE Document Server](https://github.com/ONLYOFFICE/DocumentServer) into [React](https://react.dev/) projects. This procedure creates a [basic React application](https://github.com/facebook/create-react-app) containing an ONLYOFFICE Docs editor.
+This repo contains the ONLYOFFICE Docs React component which integrates [ONLYOFFICE Document Server](https://github.com/ONLYOFFICE/DocumentServer) into [React](https://react.dev/) projects.
 
 **Please note**: Before working with this component, you need to install ONLYOFFICE Docs. To do so, you can use [Docker](https://github.com/onlyoffice/Docker-DocumentServer) (recommended).
 
@@ -9,6 +9,8 @@ This repo contains the ONLYOFFICE Docs React component which integrates [ONLYOFF
 This procedure requires [Node.js (and npm)](https://nodejs.org/en).
 
 ## Creating the demo React application with ONLYOFFICE Docs editor
+
+This procedure creates a [basic React application](https://github.com/facebook/create-react-app) and installs an ONLYOFFICE Docs editor in it.
 
 1. Create a new React project named *onlyoffice-react-demo* using the *Create React App* package:
 ```
