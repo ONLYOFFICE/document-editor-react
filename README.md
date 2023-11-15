@@ -58,12 +58,6 @@ var onLoadComponentError = function (errorCode, errorDescription) {
 };
 
 export default function App() {
-    const editorRef = useRef(null);
-    const log = () => {
-        if (editorRef.current) {
-            console.log(editorRef.current.getContent());
-        }
-    };
     return (
         <pre>
             <DocumentEditor
