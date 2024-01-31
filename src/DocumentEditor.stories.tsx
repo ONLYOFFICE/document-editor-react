@@ -24,6 +24,7 @@ export default {
   title: "DocumentEditor",
   component: DocumentEditor,
   parameters: {},
+  tags: ["autodocs"],
   decorators: [
     (Story) => (
       <div style={{ height: "400px" }}>

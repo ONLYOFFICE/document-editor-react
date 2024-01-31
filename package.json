@@ -18,8 +18,8 @@
   "scripts": {
     "rollup": "rollup -c",
     "test": "jest",
-    "storybook": "start-storybook -p 6006",
-    "build-storybook": "build-storybook"
+    "storybook": "storybook dev -p 6006",
+    "build-storybook": "storybook build"
   },
   "devDependencies": {
     "@babel/core": "^7.23.9",
@@ -29,14 +29,14 @@
     "@rollup/plugin-commonjs": "^22.0.2",
     "@rollup/plugin-node-resolve": "^15.0.1",
     "@rollup/plugin-typescript": "^8.3.4",
-    "@storybook/addon-actions": "^6.5.14",
-    "@storybook/addon-essentials": "^6.5.14",
-    "@storybook/addon-interactions": "^6.5.14",
-    "@storybook/addon-links": "^6.5.14",
-    "@storybook/builder-webpack4": "^6.5.14",
-    "@storybook/manager-webpack4": "^6.5.14",
-    "@storybook/react": "^6.5.14",
-    "@storybook/testing-library": "^0.0.13",
+    "@storybook/addon-essentials": "^7.6.11",
+    "@storybook/addon-interactions": "^7.6.11",
+    "@storybook/addon-links": "^7.6.11",
+    "@storybook/addon-onboarding": "1.0.11",
+    "@storybook/blocks": "^7.6.11",
+    "@storybook/react": "^7.6.11",
+    "@storybook/react-webpack5": "^7.6.11",
+    "@storybook/test": "^7.6.11",
     "@testing-library/react": "^14.2.0",
     "@types/jest": "^29.5.11",
     "@types/react": "^18.2.48",
@@ -51,6 +51,7 @@
     "rollup-plugin-filesize": "^9.1.2",
     "rollup-plugin-peer-deps-external": "^2.2.4",
     "@rollup/plugin-terser": "^0.2.0",
+    "storybook": "^7.6.11",
     "tslib": "^2.6.2",
     "typescript": "^5.3.3"
   },
