@@ -1,28 +1,42 @@
 # @onlyoffice/document-editor-react
 
-This repo contains the React component for [ONLYOFFICE Document Server](https://github.com/ONLYOFFICE/DocumentServer).
+This repo contains the ONLYOFFICE Docs React component which integrates [ONLYOFFICE Document Server](https://github.com/ONLYOFFICE/DocumentServer) into [React](https://react.dev/) projects.
 
 **Please note**: Before working with this component, you need to install ONLYOFFICE Docs. To do so, you can use [Docker](https://github.com/onlyoffice/Docker-DocumentServer) (recommended).
 
-## Installation
-Install it from **npm** in your project. Run:
+## Prerequisites
 
-```bash
+This procedure requires [Node.js (and npm)](https://nodejs.org/en).
+
+## Creating the demo React application with ONLYOFFICE Docs editor
+
+This procedure creates a [basic React application](https://github.com/facebook/create-react-app) and installs an ONLYOFFICE Docs editor in it.
+
+1. Create a new React project named *onlyoffice-react-demo* using the *Create React App* package:
+```
+npx create-react-app onlyoffice-react-demo
+```
+
+2. Go to the newly created directory:
+```
+cd onlyoffice-react-demo
+```
+
+3. Install ONLYOFFICE Docs React component from **npm** and save it to the *package.json* file with *--save*:
+```
 npm install --save @onlyoffice/document-editor-react
 ```
-or:
-```bash
+You can also use the following **yarn** command:
+```
 yarn add @onlyoffice/document-editor-react
 ```
 
-## Usage
+4. Open the *./src/App.js* file in the *onlyoffice-react-demo* project and replace its contents with the following code:
 
-Find below the component usage example:
 ```
-...
+import React, { useRef } from 'react';
 import { DocumentEditor } from "@onlyoffice/document-editor-react";
-...
-...
+
 var onDocumentReady = function (event) {
     console.log("Document is loaded");
 };
@@ -42,28 +56,79 @@ var onLoadComponentError = function (errorCode, errorDescription) {
             break;
     }
 };
-...
-...
-<DocumentEditor
-  id="docxEditor"
-  documentServerUrl="http://documentserver/"
-  config={{
-    "document": {
-      "fileType": "docx",
-      "key": "Khirz6zTPdfd7",
-      "title": "Example Document Title.docx",
-      "url": "https://example.com/url-to-example-document.docx"
-    },
-    "documentType": "word",
-    "editorConfig": {
-      "callbackUrl": "https://example.com/url-to-callback.ashx"
-    }
-  }}
-  events_onDocumentReady={onDocumentReady}
-  onLoadComponentError={onLoadComponentError}
-/>
-...
+
+export default function App() {
+    return (
+        <pre>
+            <DocumentEditor
+                id="docxEditor"
+                documentServerUrl="http://documentserver/"
+                config={{
+                    "document": {
+                        "fileType": "docx",
+                        "key": "Khirz6zTPdfd7",
+                        "title": "Example Document Title.docx",
+                        "url": "https://example.com/url-to-example-document.docx"
+                    },
+                    "documentType": "word",
+                    "editorConfig": {
+                        "callbackUrl": "https://example.com/url-to-callback.ashx"
+                    }
+                }}
+                events_onDocumentReady={onDocumentReady}
+                onLoadComponentError={onLoadComponentError}
+            />
+        </>
+    );
+}
 ```
+Replace the following lines with your own data:
+* **"http://documentserver/"** - replace with the URL of your server;
+* **"https://example.com/url-to-example-document.docx"** - replace with the URL to your file;
+* **"https://example.com/url-to-callback.ashx"** - replace with your callback URL (this is required for the saving functionality to work).
+
+This JavaScript file will create the *App* component containing the ONLYOFFICE Docs editor configured with basic features.
+
+5. Test the application using the Node.js development server:
+* To start the development server, navigate to the *onlyoffice-react-demo* directory and run:
+```
+npm run start
+```
+* To stop the development server, select on the command line or command prompt and press *Ctrl+C*.
+
+## Deploying the demo React application
+
+The easiest way to deploy the application to a production environment is to install [serve](https://github.com/vercel/serve) and create a static server:
+1. Install the *serve* package globally:
+```
+npm install -g serve
+```
+
+2. Serve your static site on the 3000 port:
+```
+serve -s build
+```
+Another port can be adjusted using the *-l* or *--listen* flags:
+```
+serve -s build -l 4000
+```
+
+3. To serve the project folder, go to it and run the *serve* command:
+```
+cd onlyoffice-react-demo
+serve
+```
+
+Now you can deploy the application to the created server:
+1. Navigate to the *onlyoffice-react-demo* directory and run:
+```
+npm run build
+```
+The *build* directory will be created with a production build of your app.
+
+2. Copy the contents of the *onlyoffice-react-demo/build* directory to the root directory of the web server (to the *onlyoffice-react-demo* folder).
+
+The application will be deployed on the web server (*http://localhost:3000* by default).
 
 ## API
 ### Props
