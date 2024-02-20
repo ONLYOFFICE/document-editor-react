@@ -2,6 +2,7 @@
 
 ##
 - improved load api.js
+- updated IConfig
 
 ## 1.3.0
 - extended IConfig

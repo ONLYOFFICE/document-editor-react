@@ -54,13 +54,21 @@ type DocumentEditorProps = {
   events_onMakeActionLink?: (event: object) => void;
   events_onRequestInsertImage?: (event: object) => void;
   events_onRequestSaveAs?: (event: object) => void;
+  /**
+   * @deprecated Deprecated since version 7.5, please use events_onRequestSelectSpreadsheet instead.
+   */
   events_onRequestMailMergeRecipients?: (event: object) => void;
+  /**
+   * @deprecated Deprecated since version 7.5, please use onRequestSelectDocument instead.
+   */
   events_onRequestCompareFile?: (event: object) => void;
   events_onRequestEditRights?: (event: object) => void;
   events_onRequestHistory?: (event: object) => void;
   events_onRequestHistoryClose?: (event: object) => void;
   events_onRequestHistoryData?: (event: object) => void;
   events_onRequestRestore?: (event: object) => void;
+  events_onRequestSelectSpreadsheet?: (event: object) => void;
+  events_onRequestSelectDocument?: (event: object) => void;
 };
 
 const DocumentEditor = (props: DocumentEditorProps) => {
@@ -99,7 +107,9 @@ const DocumentEditor = (props: DocumentEditorProps) => {
     events_onRequestHistory,
     events_onRequestHistoryClose,
     events_onRequestHistoryData,
-    events_onRequestRestore
+    events_onRequestRestore,
+    events_onRequestSelectSpreadsheet,
+    events_onRequestSelectDocument
   } = props;
 
   useEffect(() => {
@@ -181,7 +191,10 @@ const DocumentEditor = (props: DocumentEditorProps) => {
           onRequestHistory: events_onRequestHistory,
           onRequestHistoryClose: events_onRequestHistoryClose,
           onRequestHistoryData: events_onRequestHistoryData,
-          onRequestRestore: events_onRequestRestore
+          onRequestRestore: events_onRequestRestore,
+          onRequestSelectSpreadsheet: events_onRequestSelectSpreadsheet,
+          onRequestSelectDocument: events_onRequestSelectDocument
+
         },
         height,
         type,
