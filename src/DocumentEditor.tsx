@@ -238,9 +238,4 @@ const DocumentEditor = (props: DocumentEditorProps) => {
   return <div id={id}></div>;
 };
 
-DocumentEditor.defaultProps = {
-  height: "100%",
-  width: "100%",
-};
-
 export default DocumentEditor;
