@@ -6,28 +6,21 @@ import terser from "@rollup/plugin-terser";
 import peerDepsExternal from "rollup-plugin-peer-deps-external";
 import filesize from "rollup-plugin-filesize";
 
-const pkg = require("./package.json");
-
-const globals = {
-  react: "React",
-  "react-dom": "ReactDOM",
-};
+const packageJson = require("./package.json");
 
 export default [
   {
     input: "src/index.ts",
     output: [
-      // {
-      //   file: pkg.main,
-      //   format: "cjs",
-      //   //sourcemap: false,
-      //   globals,
-      // },
       {
-        file: pkg.module,
+        file: packageJson.main,
+        format: "cjs",
+        sourcemap: true,
+      },
+      {
+        file: packageJson.module,
         format: "esm",
-        //sourcemap: false,
-        globals,
+        sourcemap: true,
       },
     ],
     plugins: [
@@ -40,11 +33,11 @@ export default [
       terser(),
       filesize(),
     ],
-    //external: [...Object.keys(pkg.peerDependencies || {})],
+    external: ["react", "react-dom", "styled-components"],
   },
   {
-    input: "dist/esm/index.d.ts",
-    output: [{ file: "dist/index.d.ts", format: "esm" }],
-    plugins: [dts()],
+    input: "src/index.ts",
+    output: [{ file: packageJson.types, format: "es" }],
+    plugins: [dts.default()],
   },
 ];
