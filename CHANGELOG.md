@@ -1,6 +1,8 @@
 # Change Log
 
 ##
+- improved load api.js
+- updated IConfig
 - bump dependencies
 
 ## 1.3.0
