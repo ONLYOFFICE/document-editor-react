@@ -70,6 +70,7 @@ type DocumentEditorProps = {
   events_onRequestRestore?: (event: object) => void;
   events_onRequestSelectSpreadsheet?: (event: object) => void;
   events_onRequestSelectDocument?: (event: object) => void;
+  events_onRequestUsers?: (event: object) => void;
 };
 
 const DocumentEditor = (props: DocumentEditorProps) => {
@@ -110,7 +111,8 @@ const DocumentEditor = (props: DocumentEditorProps) => {
     events_onRequestHistoryData,
     events_onRequestRestore,
     events_onRequestSelectSpreadsheet,
-    events_onRequestSelectDocument
+    events_onRequestSelectDocument,
+    events_onRequestUsers
   } = props;
 
   useEffect(() => {
@@ -196,8 +198,8 @@ const DocumentEditor = (props: DocumentEditorProps) => {
           onRequestHistoryData: events_onRequestHistoryData,
           onRequestRestore: events_onRequestRestore,
           onRequestSelectSpreadsheet: events_onRequestSelectSpreadsheet,
-          onRequestSelectDocument: events_onRequestSelectDocument
-
+          onRequestSelectDocument: events_onRequestSelectDocument,
+          onRequestUsers: events_onRequestUsers
         },
         height,
         type,
