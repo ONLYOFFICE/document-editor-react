@@ -17,6 +17,7 @@
 import React, { useEffect } from "react";
 import IConfig from "./model/config";
 import loadScript from "./utils/loadScript";
+import cloneDeep from "lodash/cloneDeep";
 
 declare global {
   interface Window {
@@ -163,6 +164,8 @@ const DocumentEditor = (props: DocumentEditorProps) => {
         window.DocEditor = { instances: {} };
       }
 
+      var cloneConfig = cloneDeep(config);
+
       let initConfig = Object.assign({
         document: {
           fileType: document_fileType,
@@ -199,7 +202,7 @@ const DocumentEditor = (props: DocumentEditorProps) => {
         height,
         type,
         width,
-      }, config || {});
+      }, cloneConfig || {});
 
       const editor = window.DocsAPI.DocEditor(id, initConfig);
       window.DocEditor.instances[id] = editor;
