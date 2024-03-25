@@ -26,10 +26,6 @@ cd onlyoffice-react-demo
 ```
 npm install --save @onlyoffice/document-editor-react
 ```
-You can also use the following **yarn** command:
-```
-yarn add @onlyoffice/document-editor-react
-```
 
 4. Open the *./src/App.js* file in the *onlyoffice-react-demo* project and replace its contents with the following code:
 
@@ -175,11 +171,11 @@ Change the address of the document server in the *config/default.json* file:
 
 ### Build Storybook:
 ```
-yarn build-storybook
+npm run build-storybook
 ```
 ### Start Storybook:
 ```
-yarn storybook
+npm run storybook
 ```
 
 ## Development
@@ -190,15 +186,15 @@ git clone https://github.com/ONLYOFFICE/document-editor-react
 ```
 ### Install the project dependencies:
 ```
-yarn install
+npm install
 ```
 ### Test the component:
 ```
-yarn test
+npm run test
 ```
 ### Build the project:
 ```
-yarn rollup
+npm run rollup
 ```
 ### Create the package:
 ```
