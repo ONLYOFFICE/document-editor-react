@@ -55,9 +55,6 @@
     "tslib": "^2.6.2",
     "typescript": "^5.3.3"
   },
-  "resolutions": {
-    "jackspeak": "2.1.1"
-  },
   "peerDependencies": {
     "react": "^16.9.0 || ^17 || ^18",
     "react-dom": "^16.9.0 || ^17 || ^18"
