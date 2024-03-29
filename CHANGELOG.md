@@ -1,5 +1,8 @@
 # Change Log
 
+##
+- fix re-rendering of component after init editors
+
 ## 1.4.1
 - improved load api.js
 - updated IConfig
