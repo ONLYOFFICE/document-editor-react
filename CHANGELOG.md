@@ -1,6 +1,7 @@
 # Change Log
 
 ##
+- added props events_onRequestUsers
 - fix re-rendering of component after init editors
 
 ## 1.4.1
