@@ -17,6 +17,7 @@
 import React, { useEffect } from "react";
 import IConfig from "./model/config";
 import loadScript from "./utils/loadScript";
+import cloneDeep from "lodash/cloneDeep";
 
 declare global {
   interface Window {
@@ -69,6 +70,7 @@ type DocumentEditorProps = {
   events_onRequestRestore?: (event: object) => void;
   events_onRequestSelectSpreadsheet?: (event: object) => void;
   events_onRequestSelectDocument?: (event: object) => void;
+  events_onRequestUsers?: (event: object) => void;
 };
 
 const DocumentEditor = (props: DocumentEditorProps) => {
@@ -109,7 +111,8 @@ const DocumentEditor = (props: DocumentEditorProps) => {
     events_onRequestHistoryData,
     events_onRequestRestore,
     events_onRequestSelectSpreadsheet,
-    events_onRequestSelectDocument
+    events_onRequestSelectDocument,
+    events_onRequestUsers
   } = props;
 
   useEffect(() => {
@@ -163,6 +166,8 @@ const DocumentEditor = (props: DocumentEditorProps) => {
         window.DocEditor = { instances: {} };
       }
 
+      var cloneConfig = cloneDeep(config);
+
       let initConfig = Object.assign({
         document: {
           fileType: document_fileType,
@@ -193,13 +198,13 @@ const DocumentEditor = (props: DocumentEditorProps) => {
           onRequestHistoryData: events_onRequestHistoryData,
           onRequestRestore: events_onRequestRestore,
           onRequestSelectSpreadsheet: events_onRequestSelectSpreadsheet,
-          onRequestSelectDocument: events_onRequestSelectDocument
-
+          onRequestSelectDocument: events_onRequestSelectDocument,
+          onRequestUsers: events_onRequestUsers
         },
         height,
         type,
         width,
-      }, config || {});
+      }, cloneConfig || {});
 
       const editor = window.DocsAPI.DocEditor(id, initConfig);
       window.DocEditor.instances[id] = editor;

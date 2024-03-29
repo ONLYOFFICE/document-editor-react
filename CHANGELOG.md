@@ -1,5 +1,9 @@
 # Change Log
 
+## 1.5.0
+- added props events_onRequestUsers
+- fix re-rendering of component after init editors
+
 ## 1.4.1
 - improved load api.js
 - updated IConfig
