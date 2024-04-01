@@ -20,7 +20,7 @@ interface IConfig {
   token?: string;
   type?: string;
   width?: string;
-  document: {
+  document?: {
     fileType: string;
     key: string;
     referenceData?: {
