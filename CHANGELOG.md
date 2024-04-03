@@ -1,5 +1,8 @@
 # Change Log
 
+## 1.5.1
+- IConfig->document is not required
+
 ## 1.5.0
 - added props events_onRequestUsers
 - fix re-rendering of component after init editors
