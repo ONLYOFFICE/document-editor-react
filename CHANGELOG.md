@@ -1,6 +1,6 @@
 # Change Log
 
-##
+## 1.5.1
 - IConfig->document is not required
 
 ## 1.5.0
