@@ -232,6 +232,8 @@ const DocumentEditor = (props: DocumentEditorProps) => {
       document = document || {};
       document.document_title = document_title;
     }
+
+    return document;
   }
 
   const getEditorConfig = () => {
@@ -241,6 +243,8 @@ const DocumentEditor = (props: DocumentEditorProps) => {
       editorConfig = editorConfig || {};
       editorConfig.lang = editorConfig_lang;
     }
+
+    return editorConfig;
   }
 
   const onError = (errorCode: number) => {
