@@ -228,7 +228,7 @@ const DocumentEditor = (props: DocumentEditorProps) => {
       document.fileType = document_fileType;
     }
 
-    if (document_fileType) {
+    if (document_title) {
       document = document || {};
       document.document_title = document_title;
     }
