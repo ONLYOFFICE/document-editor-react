@@ -1,5 +1,8 @@
 # Change Log
 
+##
+- added shardkey property
+
 ## 1.5.1
 - IConfig->document is not required
 
