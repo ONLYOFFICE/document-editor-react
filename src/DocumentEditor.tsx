@@ -30,6 +30,7 @@ type DocumentEditorProps = {
   id: string;
 
   documentServerUrl: string;
+  shardkey?: string | boolean;
 
   config: IConfig;
 
@@ -78,6 +79,7 @@ const DocumentEditor = (props: DocumentEditorProps) => {
     id,
 
     documentServerUrl,
+    shardkey = true,
 
     config,
 
@@ -141,8 +143,16 @@ const DocumentEditor = (props: DocumentEditorProps) => {
     let url = documentServerUrl;
     if (!url.endsWith("/")) url += "/";
 
-    const docApiUrl = `${url}web-apps/apps/api/documents/api.js`;
-    loadScript(docApiUrl, "onlyoffice-api-script")
+    let docsApiUrl = `${url}web-apps/apps/api/documents/api.js`;
+    if (shardkey) {
+      if (typeof shardkey === "boolean") {
+        docsApiUrl += `?shardkey=${config.document?.key}`;
+      } else {
+        docsApiUrl += `?shardkey=${shardkey}`;
+      }
+    }
+
+    loadScript(docsApiUrl, "onlyoffice-api-script")
       .then(() => onLoad())
       .catch(() => onError(-2));
 
