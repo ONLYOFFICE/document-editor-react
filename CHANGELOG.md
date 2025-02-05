@@ -1,6 +1,6 @@
 # Change Log
 
-##
+## 1.6.0
 - added shardkey property
 
 ## 1.5.1
