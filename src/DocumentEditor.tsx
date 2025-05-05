@@ -15,7 +15,7 @@
 */
 
 import React, { useEffect } from "react";
-import IConfig from "./model/config";
+import { IConfig } from "./model/config";
 import loadScript from "./utils/loadScript";
 import cloneDeep from "lodash/cloneDeep";
 
@@ -26,7 +26,7 @@ declare global {
   }
 }
 
-type DocumentEditorProps = {
+export type DocumentEditorProps = {
   id: string;
 
   documentServerUrl: string;
