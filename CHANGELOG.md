@@ -1,5 +1,7 @@
 # Change Log
 
+- added support React 19
+
 ## 1.6.0
 - added shardkey property
 
