@@ -14,24 +14,19 @@
 * limitations under the License.
 */
 
-import React from "react";
-import { ComponentStory, ComponentMeta } from "@storybook/react";
-import config from "./config/default.json";
+import { Meta, StoryObj } from "@storybook/react";
+import config from "../config/default.json";
+import './stories.css';
 
-import DocumentEditor from "./DocumentEditor";
+import DocumentEditor from "../DocumentEditor";
 
-export default {
+const meta = {
   title: "DocumentEditor",
   component: DocumentEditor,
-  parameters: {},
+  parameters: {
+    layout: 'fullscreen',
+  },
   tags: ["autodocs"],
-  decorators: [
-    (Story) => (
-      <div style={{ height: "400px" }}>
-        <Story />
-      </div>
-    ),
-  ],
   argTypes: {
     documentType: {
       options: ["word", "cell", "slide"],
@@ -70,70 +65,71 @@ export default {
     events_onRequestHistoryData: { action: "onRequestHistoryData" },
     events_onRequestRestore: { action: "onRequestRestore" }
   },
-} as ComponentMeta<typeof DocumentEditor>;
+} as Meta<typeof DocumentEditor>;
 
-const Template: ComponentStory<typeof DocumentEditor> = (args) => <DocumentEditor {...args} />
+export default meta;
+type Story = StoryObj<typeof meta>;
 
-export const FormTemplate = Template.bind({});
-FormTemplate.storyName = "Form";
-FormTemplate.args = {
-  id: "pdfEditor",
-  documentServerUrl: config.documentServerUrl,
-  config: {
-    document: {
-      fileType: "pdf",
-      key: "pdf" + Math.random(),
-      title: "oform.pdf",
-      url: config.demoStorage + "oform.pdf",
+export const Document: Story = {
+  args: {
+    id: "docxEditor",
+    documentServerUrl: config.documentServerUrl,
+    config: {
+      document: {
+        fileType: "docx",
+        key: "docx" + Math.random(),
+        title: "demo.docx",
+        url: config.demoStorage + "demo.docx",
+      },
+      documentType: "word",
     },
-    documentType: "word",
-  },
+  }
 };
 
-export const DocumentTemplate = Template.bind({});
-DocumentTemplate.storyName = "Document";
-DocumentTemplate.args = {
-  id: "docxEditor",
-  documentServerUrl: config.documentServerUrl,
-  config: {
-    document: {
-      fileType: "docx",
-      key: "docx" + Math.random(),
-      title: "demo.docx",
-      url: config.demoStorage + "demo.docx",
+export const Spreadsheet: Story = {
+  args: {
+    id: "xlsxEditor",
+    documentServerUrl: config.documentServerUrl,
+    config: {
+      document: {
+        fileType: "xlsx",
+        key: "xlsx" + Math.random(),
+        title: "demo.xlsx",
+        url: config.demoStorage + "demo.xlsx",
+      },
+      documentType: "cell",
     },
-    documentType: "word",
-  },
+  }
 };
 
-export const SpreadsheetTemplate = Template.bind({});
-SpreadsheetTemplate.storyName = "Spreadsheet";
-SpreadsheetTemplate.args = {
-  id: "xlsxEditor",
-  documentServerUrl: config.documentServerUrl,
-  config: {
-    document: {
-      fileType: "xlsx",
-      key: "xlsx" + Math.random(),
-      title: "demo.xlsx",
-      url: config.demoStorage + "demo.xlsx",
+export const Presentation: Story = {
+  args: {
+    id: "pptxEditor",
+    documentServerUrl: config.documentServerUrl,
+    config: {
+      document: {
+        fileType: "pptx",
+        key: "pptx" + Math.random(),
+        title: "demo.pptx",
+        url: config.demoStorage + "demo.pptx",
+      },
+      documentType: "slide",
     },
-    documentType: "cell",
-  },
+  }
 };
 
-export const PresentationTemplate = Template.bind({});
-PresentationTemplate.storyName = "Presentation";
-PresentationTemplate.args = {
-  id: "pptxEditor",
-  documentServerUrl: config.documentServerUrl,
-  config: {
-    document: {
-      fileType: "pptx",
-      key: "pptx" + Math.random(),
-      title: "demo.pptx",
-      url: config.demoStorage + "demo.pptx",
+export const Form: Story = {
+  args: {
+    id: "pdfEditor",
+    documentServerUrl: config.documentServerUrl,
+    config: {
+      document: {
+        fileType: "pdf",
+        key: "pdf" + Math.random(),
+        title: "oform.pdf",
+        url: config.demoStorage + "oform.pdf",
+      },
+      documentType: "word",
     },
-    documentType: "slide",
-  },
+  }
 };

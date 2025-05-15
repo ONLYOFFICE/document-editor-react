@@ -1,3 +1,4 @@
+import React from 'react';
 import type { Preview } from "@storybook/react";
 
 const preview: Preview = {
@@ -10,6 +11,17 @@ const preview: Preview = {
       },
     },
   },
+  decorators: [
+    (Story, context) => {
+      context.args.id = `${context.args.id}-${Date.now()}`;
+
+      return (
+        <div style={{ display: 'grid', height: "100%", minHeight: "400px" }}>
+          <Story />
+        </div>
+      )
+    },
+  ],
 };
 
 export default preview;

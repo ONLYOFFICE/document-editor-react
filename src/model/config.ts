@@ -14,7 +14,7 @@
 * limitations under the License.
 */
 
-interface IConfig {
+export interface IConfig {
   documentType?: string;
   height?: string;
   token?: string;
@@ -238,5 +238,3 @@ interface IConfig {
     onWarning?: (event: object) => void;
   }
 };
-
-export default IConfig;

@@ -7,17 +7,15 @@
     "skipLibCheck": true,
     "jsx": "react",
     "module": "ESNext",
-    "declaration": true,
-    "declarationDir": "types",
     "outDir": "dist",
     "moduleResolution": "node",
     "resolveJsonModule": true,
     "allowSyntheticDefaultImports": true,
-    "emitDeclarationOnly": true
   },
   "exclude": [
     "dist",
     "node_modules",
-    "src/**/*.test.tsx"
+    "src/**/*.test.tsx",
+    "**/*.stories.tsx"
   ]
 }

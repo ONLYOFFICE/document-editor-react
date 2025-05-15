@@ -15,4 +15,5 @@
 */
 
 export { default as DocumentEditor } from "./DocumentEditor";
+export { DocumentEditorProps } from "./DocumentEditor";
 export * from "./model/config";

@@ -1,6 +1,8 @@
 # Change Log
 
+
 ##
+- added support React 19
 - updated IConfig
 
 ## 1.6.0
