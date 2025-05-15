@@ -1,5 +1,8 @@
 # Change Log
 
+##
+- updated IConfig
+
 ## 1.6.0
 - added shardkey property
 
