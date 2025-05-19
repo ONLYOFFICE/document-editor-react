@@ -1,5 +1,9 @@
 # Change Log
 
+## 2.0.0
+- added support React 19
+- updated IConfig
+
 ## 1.6.0
 - added shardkey property
 

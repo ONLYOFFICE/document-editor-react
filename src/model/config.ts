@@ -14,7 +14,7 @@
 * limitations under the License.
 */
 
-interface IConfig {
+export interface IConfig {
   documentType?: string;
   height?: string;
   token?: string;
@@ -102,6 +102,10 @@ interface IConfig {
        * @deprecated Deprecated since version 7.1, please use the document.permissions.chat parameter instead.
        */
       chat?: boolean;
+      close?: {
+        visible: boolean;
+        text: string;
+      };
       /**
        * @deprecated Deprecated since version 6.3, please use the document.permissions.editCommentAuthorOnly and document.permissions.deleteCommentAuthorOnly fields instead.
        */
@@ -206,6 +210,7 @@ interface IConfig {
     onRequestCompareFile?: (event: object) => void;
     onRequestCreateNew?: (event: object) => void;
     onRequestEditRights?: (event: object) => void;
+    onRequestFillingStatus?: (event: object) => void;
     onRequestHistory?: (event: object) => void;
     onRequestHistoryClose?: (event: object) => void;
     onRequestHistoryData?: (event: object) => void;
@@ -217,6 +222,7 @@ interface IConfig {
     onRequestOpen?: (event: object) => void;
     onRequestReferenceData?: (event: object) => void;
     onRequestReferenceSource?: (event: object) => void;
+    onRequestRefreshFile?: (event: object) => void;
     onRequestRename?: (event: object) => void;
     onRequestRestore?: (event: object) => void;
     onRequestSaveAs?: (event: object) => void;
@@ -224,9 +230,11 @@ interface IConfig {
     onRequestSelectSpreadsheet?: (event: object) => void;
     onRequestSendNotify?: (event: object) => void;
     onRequestSharingSettings?: (event: object) => void;
+    onRequestStartFilling?: (event: object) => void;
     onRequestUsers?: (event: object) => void;
+    onStartFilling?: (event: object) => void;
+    onSubmit?: (event: object) => void;
+    onUserActionRequired?: (event: object) => void;
     onWarning?: (event: object) => void;
   }
 };
-
-export default IConfig;
