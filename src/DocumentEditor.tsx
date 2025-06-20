@@ -37,8 +37,8 @@ export type DocumentEditorProps = {
   document_fileType?: string;
   document_title?: string;
   documentType?: string;
-  editorConfig_lang?: string,
-  height?: string,
+  editorConfig_lang?: string;
+  height?: string;
   type?: string;
   width?: string;
 
@@ -68,6 +68,7 @@ export type DocumentEditorProps = {
   events_onRequestHistory?: (event: object) => void;
   events_onRequestHistoryClose?: (event: object) => void;
   events_onRequestHistoryData?: (event: object) => void;
+  events_onRequestRefreshFile?: (event: object) => void;
   events_onRequestRestore?: (event: object) => void;
   events_onRequestSelectSpreadsheet?: (event: object) => void;
   events_onRequestSelectDocument?: (event: object) => void;
@@ -111,10 +112,11 @@ const DocumentEditor = (props: DocumentEditorProps) => {
     events_onRequestHistory,
     events_onRequestHistoryClose,
     events_onRequestHistoryData,
+    events_onRequestRefreshFile,
     events_onRequestRestore,
     events_onRequestSelectSpreadsheet,
     events_onRequestSelectDocument,
-    events_onRequestUsers
+    events_onRequestUsers,
   } = props;
 
   useEffect(() => {
@@ -199,10 +201,11 @@ const DocumentEditor = (props: DocumentEditorProps) => {
           onRequestHistory: events_onRequestHistory,
           onRequestHistoryClose: events_onRequestHistoryClose,
           onRequestHistoryData: events_onRequestHistoryData,
+          onRequestRefreshFile: events_onRequestRefreshFile,
           onRequestRestore: events_onRequestRestore,
           onRequestSelectSpreadsheet: events_onRequestSelectSpreadsheet,
           onRequestSelectDocument: events_onRequestSelectDocument,
-          onRequestUsers: events_onRequestUsers
+          onRequestUsers: events_onRequestUsers,
         },
         height,
         type,
@@ -244,7 +247,7 @@ const DocumentEditor = (props: DocumentEditorProps) => {
     }
 
     return document;
-  }
+  };
 
   const getEditorConfig = () => {
     var editorConfig: any = null;
@@ -255,7 +258,7 @@ const DocumentEditor = (props: DocumentEditorProps) => {
     }
 
     return editorConfig;
-  }
+  };
 
   const onError = (errorCode: number) => {
     let message;
@@ -277,7 +280,7 @@ const DocumentEditor = (props: DocumentEditorProps) => {
     } else {
       onLoadComponentError(errorCode, message);
     }
-  }
+  };
 
   const onAppReady = () => {
     events_onAppReady!(window.DocEditor.instances[id]);

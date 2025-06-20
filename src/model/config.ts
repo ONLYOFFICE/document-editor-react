@@ -24,10 +24,10 @@ export interface IConfig {
     fileType: string;
     key: string;
     referenceData?: {
-      fileKey: string,
-      instanceId: string,
-      key: string
-    }
+      fileKey: string;
+      instanceId: string;
+      key: string;
+    };
     title: string;
     url: string;
     info?: {
@@ -236,5 +236,5 @@ export interface IConfig {
     onSubmit?: (event: object) => void;
     onUserActionRequired?: (event: object) => void;
     onWarning?: (event: object) => void;
-  }
-};
+  };
+}
