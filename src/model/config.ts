@@ -73,6 +73,9 @@ export interface IConfig {
     };
     createUrl?: string;
     lang?: string;
+    /**
+     * @deprecated Deprecated since version 8.2, please use the region parameter instead.
+     */
     location?: string;
     mode?: string;
     recent?: any[];
@@ -136,14 +139,25 @@ export interface IConfig {
       logo?: {
         image?: string;
         imageDark?: string;
+        imageLight?: string;
         imageEmbedded?: string;
         url?: string;
+        visible?: boolean;
       };
       macros?: boolean;
       macrosMode?: string;
       mentionShare?: boolean;
+      mobile?: {
+        forceView?: boolean;
+        info?: boolean;
+        standardView?: boolean;
+      };
+      /**
+       * @deprecated Starting from version 8.2, please use the mobile parameter instead.
+       */
       mobileForceView?: boolean;
       plugins?: boolean;
+      pointerMode: 'select' | 'hand';
       review?: {
         hideReviewDisplay?: boolean;
         hoverMode?: boolean;
@@ -155,15 +169,21 @@ export interface IConfig {
        * @deprecated Deprecated since version 7.0. Please use the review.reviewDisplay parameter instead.
        */
       reviewDisplay?: string;
+      showHorizontalScroll?: boolean;
       /**
        * @deprecated Deprecated since version 7.0. Please use the review.showReviewChanges parameter instead.
        */
       showReviewChanges?: boolean;
+      showVerticalScroll?: boolean;
+      slidePlayerBackground: string;
       /**
        * @deprecated Deprecated since version 7.1. Please use the features.spellcheck parameter instead.
        */
       spellcheck?: boolean;
-      submitForm?: boolean;
+      submitForm?: {
+        visible: boolean,
+        resultMessage: string,
+      } | boolean;
       toolbarHideFileName?: boolean;
       toolbarNoTabs?: boolean;
       /**
@@ -172,6 +192,7 @@ export interface IConfig {
       trackChanges?: boolean;
       uiTheme?: string;
       unit?: string;
+      wordHeadingsColor?: string;
       zoom?: number;
     };
     embedded?: {
@@ -183,6 +204,10 @@ export interface IConfig {
     };
     plugins?: {
       autostart?: string[];
+      options?: {
+        all?: Object;
+        pluginGuid: Object;
+      };
       pluginsData?: string[];
       /**
        * @deprecated Deprecated since version 4.3, please use the absolute URLs in pluginsData field.
