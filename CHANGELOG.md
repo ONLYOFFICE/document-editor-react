@@ -1,5 +1,8 @@
 # Change Log
 
+## 2.1.0
+- update IConfig for Document Server v8.3 and v9.0
+
 ## 2.0.0
 - added support React 19
 - updated IConfig

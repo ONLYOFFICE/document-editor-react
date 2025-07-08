@@ -1,6 +1,6 @@
 {
   "name": "@onlyoffice/document-editor-react",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "description": "React component for ONLYOFFICE Document Server",
   "license": "Apache-2.0",
   "bugs": {
@@ -29,6 +29,8 @@
     "@babel/preset-env": "^7.27.1",
     "@babel/preset-react": "^7.27.1",
     "@babel/preset-typescript": "^7.27.1",
+    "@commitlint/cli": "^19.8.1",
+    "@commitlint/config-conventional": "^19.8.1",
     "@rollup/plugin-commonjs": "^28.0.3",
     "@rollup/plugin-node-resolve": "^16.0.1",
     "@rollup/plugin-terser": "^0.4.4",
@@ -49,6 +51,7 @@
     "babel-jest": "^29.7.0",
     "babel-loader": "^10.0.0",
     "jest-environment-jsdom": "^29.7.0",
+    "lefthook": "^1.11.16",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
     "rollup": "^4.40.1",
