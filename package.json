@@ -1,6 +1,6 @@
 {
   "name": "@onlyoffice/document-editor-react",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "description": "React component for ONLYOFFICE Document Server",
   "license": "Apache-2.0",
   "bugs": {
