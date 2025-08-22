@@ -159,7 +159,7 @@ export interface IConfig {
        */
       mobileForceView?: boolean,
       plugins?: boolean,
-      pointerMode: 'select' | 'hand',
+      pointerMode?: 'select' | 'hand',
       review?: {
         hideReviewDisplay?: boolean,
         hoverMode?: boolean,
@@ -177,7 +177,7 @@ export interface IConfig {
        */
       showReviewChanges?: boolean,
       showVerticalScroll?: boolean,
-      slidePlayerBackground: string,
+      slidePlayerBackground?: string,
       /**
        * @deprecated Deprecated since version 7.1. Please use the features.spellcheck parameter instead.
        */
