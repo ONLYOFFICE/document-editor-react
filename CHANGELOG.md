@@ -1,5 +1,8 @@
 # Change Log
 
+## 2.1.1
+- fix IConfig (fields pointerMode and slidePlayerBackground is not required)
+
 ## 2.1.0
 - update IConfig for Document Server v8.3 and v9.0
 

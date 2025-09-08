@@ -1,10 +1,11 @@
 {
   "name": "@onlyoffice/document-editor-react",
-  "version": "2.1.0",
+  "version": "2.1.1",
   "description": "React component for ONLYOFFICE Document Server",
   "license": "Apache-2.0",
   "bugs": {
-    "url": "https://github.com/ONLYOFFICE/document-editor-react/issues"
+    "url": "https://github.com/ONLYOFFICE/document-editor-react/issues",
+    "email": "support@onlyoffice.com"
   },
   "homepage": "https://www.onlyoffice.com",
   "repository": {
