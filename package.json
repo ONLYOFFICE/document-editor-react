@@ -18,7 +18,7 @@
   ],
   "keywords": [
     "onlyoffice"
-  ]
+  ],
   "scripts": {
     "rollup": "rollup -c --bundleConfigAsCjs",
     "test": "jest",
