@@ -16,6 +16,9 @@
   "maintainers": [
     "Ascensio System SIA <integration@onlyoffice.com> (https://www.onlyoffice.com)"
   ],
+  "keywords": [
+    "onlyoffice"
+  ]
   "scripts": {
     "rollup": "rollup -c --bundleConfigAsCjs",
     "test": "jest",
@@ -75,7 +78,4 @@
     "dist"
   ],
   "types": "dist/index.d.ts",
-  "keywords": [
-    "onlyoffice"
-  ]
 }
