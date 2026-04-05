@@ -23,7 +23,7 @@
     "build-storybook": "storybook build"
   },
   "dependencies": {
-    "lodash": "4.17.21"
+    "lodash": "4.18.1"
   },
   "devDependencies": {
     "@babel/core": "^7.27.1",
