@@ -1,6 +1,6 @@
 # Change Log
 
-##
+## 2.2.0
 - added @onlyoffice/doceditor-types for document editor type definitions
 
 ## 2.1.1
