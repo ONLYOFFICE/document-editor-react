@@ -1,5 +1,8 @@
 # Change Log
 
+##
+- added @onlyoffice/doceditor-types for document editor type definitions
+
 ## 2.1.1
 - fix IConfig (fields pointerMode and slidePlayerBackground is not required)
 
