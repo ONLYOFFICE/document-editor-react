@@ -1,5 +1,5 @@
 /*
-* (c) Copyright Ascensio System SIA 2025
+* (c) Copyright Ascensio System SIA 2026
 *
 * Licensed under the Apache License, Version 2.0 (the "License");
 * you may not use this file except in compliance with the License.
@@ -15,14 +15,18 @@
 */
 
 import React, { useEffect } from "react";
-import { IConfig } from "./model/config";
 import loadScript from "./utils/loadScript";
 import cloneDeep from "lodash/cloneDeep";
+import type { Config, DocEditor } from "@onlyoffice/doceditor-types";
 
 declare global {
   interface Window {
-    DocsAPI?: any;
-    DocEditor?: any;
+    DocsAPI?: {
+      DocEditor: (id: string, config: Config) => DocEditor;
+    };
+    DocEditor?: {
+      instances: Record<string, DocEditor | undefined>;
+    };
   }
 }
 
@@ -32,7 +36,7 @@ export type DocumentEditorProps = {
   documentServerUrl: string;
   shardkey?: string | boolean;
 
-  config: IConfig;
+  config: Config;
 
   document_fileType?: string;
   document_title?: string;
@@ -168,7 +172,10 @@ const DocumentEditor = (props: DocumentEditorProps) => {
 
   const onLoad = () => {
     try {
-      if (!window.DocsAPI) onError(-3);
+      if (!window.DocsAPI) {
+        onError(-3);
+        return;
+      }
       if (window?.DocEditor?.instances[id]) {
         console.log("Skip loading. Instance already exists", id);
         return;
@@ -283,7 +290,7 @@ const DocumentEditor = (props: DocumentEditorProps) => {
   };
 
   const onAppReady = () => {
-    events_onAppReady!(window.DocEditor.instances[id]);
+    events_onAppReady!(window.DocEditor?.instances[id] || {});
   };
 
   return <div id={id}></div>;
