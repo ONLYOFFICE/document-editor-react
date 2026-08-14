@@ -14,7 +14,7 @@ This procedure creates a [basic React application](https://github.com/facebook/c
 
 1. Create a new React project named *onlyoffice-react-demo* using the *Create React App* package:
 ```
-npx create-react-app onlyoffice-react-demo
+npm create vite@latest onlyoffice-react-demo -- --template react
 ```
 
 2. Go to the newly created directory:
