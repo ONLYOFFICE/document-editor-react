@@ -22,6 +22,7 @@
   "scripts": {
     "rollup": "rollup -c --bundleConfigAsCjs",
     "test": "jest",
+    "test:e2e": "npm --prefix e2e ci && npm --prefix e2e run test",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build"
   },
