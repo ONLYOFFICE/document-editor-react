@@ -1,0 +1,23 @@
+{
+  "name": "document-editor-react-e2e",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Integration smoke tests that install the packed @onlyoffice/document-editor-react tarball into a real React app and drive it with Playwright.",
+  "scripts": {
+    "start": "vite",
+    "build": "vite build",
+    "test": "node scripts/setup.mjs && playwright test"
+  },
+  "devDependencies": {
+    "@onlyoffice/doceditor-types": "^9.3.1",
+    "@playwright/test": "^1.62.1",
+    "@types/react": "^19.1.2",
+    "@types/react-dom": "^19.1.2",
+    "@vitejs/plugin-react": "^4.3.4",
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0",
+    "typescript": "^5.8.3",
+    "vite": "^6.0.0"
+  }
+}
