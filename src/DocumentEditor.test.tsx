@@ -15,29 +15,156 @@
 */
 
 import React from "react";
-import { render } from "@testing-library/react";
+import { act, render, waitFor } from "@testing-library/react";
+
+import type { Config } from "@onlyoffice/doceditor-types";
 
 import DocumentEditor from "./DocumentEditor";
 
+const config: Config = {
+  "document": {
+    "fileType": "docx",
+    "key": "Khirz6zTPdfd7",
+    "title": "Example Document Title.docx",
+    "url": "https://example.com/url-to-example-document.docx"
+  },
+  "documentType": "word",
+  "editorConfig": {
+    "callbackUrl": "https://example.com/url-to-callback.ashx"
+  }
+};
+
+/**
+ * Stands in for DocsAPI. The real api.js replaces the placeholder element with
+ * its iframe (`target.parentNode.replaceChild(iframe, target)`) and puts a new
+ * placeholder back when the editor is destroyed.
+ */
+const mockDocsAPI = () => {
+  window.DocsAPI = {
+    DocEditor: (id: string) => {
+      const target = document.getElementById(id)!;
+      const iframe = document.createElement("iframe");
+      iframe.setAttribute("name", "frameEditor");
+      target.parentNode!.replaceChild(iframe, target);
+
+      return {
+        destroyEditor: () => {
+          const placeholder = document.createElement("div");
+          placeholder.setAttribute("id", id);
+          iframe.parentNode?.replaceChild(placeholder, iframe);
+        },
+      } as any;
+    },
+  };
+};
+
 describe("DocumentEditor", () => {
+  beforeEach(() => {
+    mockDocsAPI();
+  });
+
+  afterEach(() => {
+    window.DocsAPI = undefined;
+    window.DocEditor = undefined;
+  });
+
   test("renders the DocumentEditor component", () => {
     render(
       <DocumentEditor
         id="docxEditor"
         documentServerUrl="http://documentserver/"
-        config={{
-          "document": {
-            "fileType": "docx",
-            "key": "Khirz6zTPdfd7",
-            "title": "Example Document Title.docx",
-            "url": "https://example.com/url-to-example-document.docx"
-          },
-          "documentType": "word",
-          "editorConfig": {
-            "callbackUrl": "https://example.com/url-to-callback.ashx"
-          }
-        }}
+        config={config}
       />
     );
+  });
+
+  test("unmounts without removing a node it does not own", async () => {
+    const { unmount } = render(
+      <DocumentEditor
+        id="docxEditor"
+        documentServerUrl="http://documentserver/"
+        config={config}
+      />
+    );
+
+    await waitFor(() => expect(window.DocEditor?.instances["docxEditor"]).toBeDefined());
+
+    // DocsAPI has replaced the placeholder; React must still be able to unmount.
+    expect(() => unmount()).not.toThrow();
+    expect(window.DocEditor?.instances["docxEditor"]).toBeUndefined();
+  });
+
+  test("can be mounted again after being unmounted", async () => {
+    const first = render(
+      <DocumentEditor
+        id="docxEditor"
+        documentServerUrl="http://documentserver/"
+        config={config}
+      />
+    );
+
+    await waitFor(() => expect(window.DocEditor?.instances["docxEditor"]).toBeDefined());
+    await act(async () => { first.unmount(); });
+
+    const second = render(
+      <DocumentEditor
+        id="docxEditor"
+        documentServerUrl="http://documentserver/"
+        config={config}
+      />
+    );
+
+    await waitFor(() => expect(window.DocEditor?.instances["docxEditor"]).toBeDefined());
+    expect(second.baseElement.querySelector("iframe[name='frameEditor']")).not.toBeNull();
+
+    await act(async () => { second.unmount(); });
+  });
+
+  test("does not leave an editor behind when unmounted while api.js is loading", async () => {
+    const onLoadComponentError = jest.fn();
+
+    const { unmount } = render(
+      <DocumentEditor
+        id="docxEditor"
+        documentServerUrl="http://documentserver/"
+        config={config}
+        onLoadComponentError={onLoadComponentError}
+      />
+    );
+
+    // Unmount in the same tick, before the loadScript promise resolves.
+    unmount();
+
+    await act(async () => { await Promise.resolve(); });
+
+    expect(window.DocEditor?.instances["docxEditor"]).toBeUndefined();
+    expect(onLoadComponentError).not.toHaveBeenCalled();
+  });
+
+  test("recreates the editor when the config changes", async () => {
+    const { rerender, baseElement } = render(
+      <DocumentEditor
+        id="docxEditor"
+        documentServerUrl="http://documentserver/"
+        config={config}
+      />
+    );
+
+    await waitFor(() => expect(window.DocEditor?.instances["docxEditor"]).toBeDefined());
+    const first = window.DocEditor?.instances["docxEditor"];
+
+    await act(async () => {
+      rerender(
+        <DocumentEditor
+          id="docxEditor"
+          documentServerUrl="http://documentserver/"
+          config={{ ...config, document: { ...config.document!, key: "aNewKey" } }}
+        />
+      );
+    });
+
+    expect(window.DocEditor?.instances["docxEditor"]).toBeDefined();
+    expect(window.DocEditor?.instances["docxEditor"]).not.toBe(first);
+    expect(baseElement.querySelectorAll("iframe[name='frameEditor']")).toHaveLength(1);
   });
 });

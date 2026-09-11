@@ -14,7 +14,7 @@
 * limitations under the License.
 */
 
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import loadScript from "./utils/loadScript";
 import cloneDeep from "lodash/cloneDeep";
 import type { Config, DocEditor } from "@onlyoffice/doceditor-types";
@@ -123,6 +123,8 @@ const DocumentEditor = (props: DocumentEditorProps) => {
     events_onRequestUsers,
   } = props;
 
+  const containerRef = useRef<HTMLDivElement>(null);
+
   useEffect(() => {
     if (window?.DocEditor?.instances[id]) {
       window.DocEditor.instances[id].destroyEditor();
@@ -146,6 +148,8 @@ const DocumentEditor = (props: DocumentEditorProps) => {
   ]);
 
   useEffect(() => {
+    let cancelled = false;
+
     let url = documentServerUrl;
     if (!url.endsWith("/")) url += "/";
 
@@ -159,16 +163,39 @@ const DocumentEditor = (props: DocumentEditorProps) => {
     }
 
     loadScript(docsApiUrl, "onlyoffice-api-script")
-      .then(() => onLoad())
-      .catch(() => onError(-2));
+      .then(() => {
+        if (cancelled) return;
+        onLoad();
+      })
+      .catch(() => {
+        if (cancelled) return;
+        onError(-2);
+      });
 
     return () => {
+      cancelled = true;
+
       if (window?.DocEditor?.instances[id]) {
         window.DocEditor.instances[id].destroyEditor();
         window.DocEditor.instances[id] = undefined;
       }
     };
   }, []);
+
+  const createPlaceholder = () => {
+    const container = containerRef.current;
+    if (!container) return null;
+
+    while (container.firstChild) {
+      container.removeChild(container.firstChild);
+    }
+
+    const placeholder = document.createElement("div");
+    placeholder.setAttribute("id", id);
+    container.appendChild(placeholder);
+
+    return placeholder;
+  };
 
   const onLoad = () => {
     try {
@@ -178,6 +205,10 @@ const DocumentEditor = (props: DocumentEditorProps) => {
       }
       if (window?.DocEditor?.instances[id]) {
         console.log("Skip loading. Instance already exists", id);
+        return;
+      }
+
+      if (!createPlaceholder()) {
         return;
       }
 
@@ -293,7 +324,7 @@ const DocumentEditor = (props: DocumentEditorProps) => {
     events_onAppReady!(window.DocEditor?.instances[id] || {});
   };
 
-  return <div id={id}></div>;
+  return <div ref={containerRef} style={{ display: "contents" }}></div>;
 };
 
 export default DocumentEditor;
