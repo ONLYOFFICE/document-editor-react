@@ -4,6 +4,7 @@
 - fix the editor not being reusable after unmounting the component, for example on a soft navigation
 - the editor placeholder is now rendered inside a wrapper element, which is kept out of layout with display: contents
 - the editor is built from the current config when it changes while api.js is still loading
+- fix an editor being left behind when the component is unmounted while api.js is still loading
 
 ## 2.2.0
 - added @onlyoffice/doceditor-types for document editor type definitions

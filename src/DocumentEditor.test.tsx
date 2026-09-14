@@ -142,6 +142,27 @@ describe("DocumentEditor", () => {
     await act(async () => { second.unmount(); });
   });
 
+  test("does not leave an editor behind when unmounted while api.js is loading", async () => {
+    const onLoadComponentError = jest.fn();
+
+    const { unmount } = render(
+      <DocumentEditor
+        id="docxEditor"
+        documentServerUrl="http://documentserver/"
+        config={config}
+        onLoadComponentError={onLoadComponentError}
+      />
+    );
+
+    unmount();
+
+    await act(async () => { await Promise.resolve(); });
+
+    expect(openedKeys).toEqual([]);
+    expect(editor()).toBeUndefined();
+    expect(onLoadComponentError).not.toHaveBeenCalled();
+  });
+
   test("uses the current config when it changes while api.js is loading", async () => {
     let loaded!: () => void;
     const docsAPI = window.DocsAPI;

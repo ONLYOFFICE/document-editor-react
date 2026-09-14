@@ -154,6 +154,8 @@ const DocumentEditor = (props: DocumentEditorProps) => {
   ]);
 
   useEffect(() => {
+    let cancelled = false;
+
     let url = documentServerUrl;
     if (!url.endsWith("/")) url += "/";
 
@@ -167,10 +169,18 @@ const DocumentEditor = (props: DocumentEditorProps) => {
     }
 
     loadScript(docsApiUrl, "onlyoffice-api-script")
-      .then(() => onLoadRef.current())
-      .catch(() => onErrorRef.current(-2));
+      .then(() => {
+        if (cancelled) return;
+        onLoadRef.current();
+      })
+      .catch(() => {
+        if (cancelled) return;
+        onErrorRef.current(-2);
+      });
 
     return () => {
+      cancelled = true;
+
       if (window?.DocEditor?.instances[id]) {
         window.DocEditor.instances[id].destroyEditor();
         window.DocEditor.instances[id] = undefined;
