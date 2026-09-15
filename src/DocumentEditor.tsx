@@ -14,7 +14,7 @@
 * limitations under the License.
 */
 
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import loadScript from "./utils/loadScript";
 import cloneDeep from "lodash/cloneDeep";
 import type { Config, DocEditor } from "@onlyoffice/doceditor-types";
@@ -123,6 +123,14 @@ const DocumentEditor = (props: DocumentEditorProps) => {
     events_onRequestUsers,
   } = props;
 
+  const onLoadRef = useRef<() => void>(() => {});
+  const onErrorRef = useRef<(errorCode: number) => void>(() => {});
+
+  useEffect(() => {
+    onLoadRef.current = onLoad;
+    onErrorRef.current = onError;
+  });
+
   useEffect(() => {
     if (window?.DocEditor?.instances[id]) {
       window.DocEditor.instances[id].destroyEditor();
@@ -159,8 +167,8 @@ const DocumentEditor = (props: DocumentEditorProps) => {
     }
 
     loadScript(docsApiUrl, "onlyoffice-api-script")
-      .then(() => onLoad())
-      .catch(() => onError(-2));
+      .then(() => onLoadRef.current())
+      .catch(() => onErrorRef.current(-2));
 
     return () => {
       if (window?.DocEditor?.instances[id]) {

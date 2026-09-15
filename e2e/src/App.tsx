@@ -32,19 +32,25 @@ const onLoadComponentError = (errorCode: number, errorDescription: string) => {
   (window.__e2eErrors__ ??= []).push({ errorCode, errorDescription });
 };
 
+export const changedDocumentKey = 'e2e-changed-key';
+
 export default function App() {
   const [mounted, setMounted] = useState(true);
+  const [documentKey, setDocumentKey] = useState(config.document!.key!);
 
   return (
     <>
       <button data-testid="toggle-editor" onClick={() => setMounted((value) => !value)}>
         {mounted ? 'unmount' : 'mount'}
       </button>
+      <button data-testid="change-key" onClick={() => setDocumentKey(changedDocumentKey)}>
+        change key
+      </button>
       {mounted && (
         <DocumentEditor
           id="e2e-editor"
           documentServerUrl="http://e2e-document-server.test/"
-          config={config}
+          config={{ ...config, document: { ...config.document!, key: documentKey } }}
           onLoadComponentError={onLoadComponentError}
         />
       )}

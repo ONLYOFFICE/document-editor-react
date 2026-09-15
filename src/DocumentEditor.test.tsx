@@ -142,6 +142,48 @@ describe("DocumentEditor", () => {
     await act(async () => { second.unmount(); });
   });
 
+  test("uses the current config when it changes while api.js is loading", async () => {
+    let loaded!: () => void;
+    const docsAPI = window.DocsAPI;
+    window.DocsAPI = undefined;
+
+    const appendChild = document.body.appendChild.bind(document.body);
+
+    jest.spyOn(document.body, "appendChild").mockImplementation(((node: any) => {
+      if (node.id !== "onlyoffice-api-script") return appendChild(node);
+
+      loaded = () => {
+        window.DocsAPI = docsAPI;
+        node.onload();
+      };
+
+      return node;
+    }) as any);
+
+    const { rerender, baseElement } = render(
+      <DocumentEditor
+        id="docxEditor"
+        documentServerUrl="http://documentserver/"
+        config={config}
+      />
+    );
+
+    await act(async () => {
+      rerender(
+        <DocumentEditor
+          id="docxEditor"
+          documentServerUrl="http://documentserver/"
+          config={withKey("aNewKey")}
+        />
+      );
+    });
+
+    await act(async () => { loaded(); await Promise.resolve(); });
+
+    expect(openedKeys).toEqual(["aNewKey"]);
+    expect(baseElement.querySelector("iframe[name='frameEditor']")).not.toBeNull();
+  });
+
   test("recreates the editor when the config changes", async () => {
     const { rerender, baseElement } = render(
       <DocumentEditor
