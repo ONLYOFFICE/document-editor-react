@@ -293,7 +293,11 @@ const DocumentEditor = (props: DocumentEditorProps) => {
     events_onAppReady!(window.DocEditor?.instances[id] || {});
   };
 
-  return <div id={id}></div>;
+  return (
+    <div style={{ display: "contents" }}>
+      <div id={id}></div>
+    </div>
+  );
 };
 
 export default DocumentEditor;

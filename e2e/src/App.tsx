@@ -1,3 +1,5 @@
+import { useState } from 'react';
+
 import { DocumentEditor } from '@onlyoffice/document-editor-react';
 import type { Config } from '@onlyoffice/doceditor-types';
 
@@ -31,12 +33,21 @@ const onLoadComponentError = (errorCode: number, errorDescription: string) => {
 };
 
 export default function App() {
+  const [mounted, setMounted] = useState(true);
+
   return (
-    <DocumentEditor
-      id="e2e-editor"
-      documentServerUrl="http://e2e-document-server.test/"
-      config={config}
-      onLoadComponentError={onLoadComponentError}
-    />
+    <>
+      <button data-testid="toggle-editor" onClick={() => setMounted((value) => !value)}>
+        {mounted ? 'unmount' : 'mount'}
+      </button>
+      {mounted && (
+        <DocumentEditor
+          id="e2e-editor"
+          documentServerUrl="http://e2e-document-server.test/"
+          config={config}
+          onLoadComponentError={onLoadComponentError}
+        />
+      )}
+    </>
   );
 }

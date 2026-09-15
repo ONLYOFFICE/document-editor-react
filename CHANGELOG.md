@@ -1,5 +1,9 @@
 # Change Log
 
+## [Unreleased]
+- fix the editor not being reusable after unmounting the component, for example on a soft navigation
+- the editor placeholder is now rendered inside a wrapper element, which is kept out of layout with display: contents
+
 ## 2.2.0
 - added @onlyoffice/doceditor-types for document editor type definitions
 
