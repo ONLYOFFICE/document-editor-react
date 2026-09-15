@@ -1,5 +1,8 @@
 # Change Log
 
+## [Unreleased]
+- added DocumentEditorPreload component for caching the editor static assets before a document is opened (ONLYOFFICE Docs 9.0 and later)
+
 ## 2.2.0
 - added @onlyoffice/doceditor-types for document editor type definitions
 
