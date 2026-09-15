@@ -1,5 +1,8 @@
 # Change Log
 
+## [unreleased]
+- deprecated the legacy flat props (document_fileType, document_title, documentType, editorConfig_lang, height, type, width and all events_* callbacks) in favor of the config object
+
 ## 2.2.0
 - added @onlyoffice/doceditor-types for document editor type definitions
 
