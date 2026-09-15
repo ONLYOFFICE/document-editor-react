@@ -25,7 +25,7 @@ jobs:
           node-version: 24
       - name: Install workspace dependencies
         if: env.E2E_LIB_VERSION == ''
-        run: npm install
+        run: npm ci
       - name: Install e2e dependencies
         run: npm ci
         working-directory: e2e
