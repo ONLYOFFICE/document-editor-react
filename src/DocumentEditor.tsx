@@ -14,7 +14,7 @@
 * limitations under the License.
 */
 
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import loadScript from "./utils/loadScript";
 import cloneDeep from "lodash/cloneDeep";
 import type { Config, DocEditor } from "@onlyoffice/doceditor-types";
@@ -38,44 +38,128 @@ export type DocumentEditorProps = {
 
   config: Config;
 
+  /**
+   * @deprecated Use `config.document.fileType` instead.
+   */
   document_fileType?: string;
+  /**
+   * @deprecated Use `config.document.title` instead.
+   */
   document_title?: string;
+  /**
+   * @deprecated Use `config.documentType` instead.
+   */
   documentType?: string;
+  /**
+   * @deprecated Use `config.editorConfig.lang` instead.
+   */
   editorConfig_lang?: string;
+  /**
+   * @deprecated Use `config.height` instead.
+   */
   height?: string;
+  /**
+   * @deprecated Use `config.type` instead.
+   */
   type?: string;
+  /**
+   * @deprecated Use `config.width` instead.
+   */
   width?: string;
 
   onLoadComponentError?: (errorCode: number, errorDescription: string) => void;
 
+  /**
+   * @deprecated Use `config.events.onAppReady` instead.
+   */
   events_onAppReady?: (event: object) => void;
+  /**
+   * @deprecated Use `config.events.onDocumentStateChange` instead.
+   */
   events_onDocumentStateChange?: (event: object) => void;
+  /**
+   * @deprecated Use `config.events.onMetaChange` instead.
+   */
   events_onMetaChange?: (event: object) => void;
+  /**
+   * @deprecated Use `config.events.onDocumentReady` instead.
+   */
   events_onDocumentReady?: (event: object) => void;
+  /**
+   * @deprecated Use `config.events.onInfo` instead.
+   */
   events_onInfo?: (event: object) => void;
+  /**
+   * @deprecated Use `config.events.onWarning` instead.
+   */
   events_onWarning?: (event: object) => void;
+  /**
+   * @deprecated Use `config.events.onError` instead.
+   */
   events_onError?: (event: object) => void;
+  /**
+   * @deprecated Use `config.events.onRequestSharingSettings` instead.
+   */
   events_onRequestSharingSettings?: (event: object) => void;
+  /**
+   * @deprecated Use `config.events.onRequestRename` instead.
+   */
   events_onRequestRename?: (event: object) => void;
+  /**
+   * @deprecated Use `config.events.onMakeActionLink` instead.
+   */
   events_onMakeActionLink?: (event: object) => void;
+  /**
+   * @deprecated Use `config.events.onRequestInsertImage` instead.
+   */
   events_onRequestInsertImage?: (event: object) => void;
+  /**
+   * @deprecated Use `config.events.onRequestSaveAs` instead.
+   */
   events_onRequestSaveAs?: (event: object) => void;
   /**
-   * @deprecated Deprecated since version 7.5, please use events_onRequestSelectSpreadsheet instead.
+   * @deprecated Deprecated since version 7.5, please use `config.events.onRequestSelectSpreadsheet` instead.
    */
   events_onRequestMailMergeRecipients?: (event: object) => void;
   /**
-   * @deprecated Deprecated since version 7.5, please use onRequestSelectDocument instead.
+   * @deprecated Deprecated since version 7.5, please use `config.events.onRequestSelectDocument` instead.
    */
   events_onRequestCompareFile?: (event: object) => void;
+  /**
+   * @deprecated Use `config.events.onRequestEditRights` instead.
+   */
   events_onRequestEditRights?: (event: object) => void;
+  /**
+   * @deprecated Use `config.events.onRequestHistory` instead.
+   */
   events_onRequestHistory?: (event: object) => void;
+  /**
+   * @deprecated Use `config.events.onRequestHistoryClose` instead.
+   */
   events_onRequestHistoryClose?: (event: object) => void;
+  /**
+   * @deprecated Use `config.events.onRequestHistoryData` instead.
+   */
   events_onRequestHistoryData?: (event: object) => void;
+  /**
+   * @deprecated Use `config.events.onRequestRefreshFile` instead.
+   */
   events_onRequestRefreshFile?: (event: object) => void;
+  /**
+   * @deprecated Use `config.events.onRequestRestore` instead.
+   */
   events_onRequestRestore?: (event: object) => void;
+  /**
+   * @deprecated Use `config.events.onRequestSelectSpreadsheet` instead.
+   */
   events_onRequestSelectSpreadsheet?: (event: object) => void;
+  /**
+   * @deprecated Use `config.events.onRequestSelectDocument` instead.
+   */
   events_onRequestSelectDocument?: (event: object) => void;
+  /**
+   * @deprecated Use `config.events.onRequestUsers` instead.
+   */
   events_onRequestUsers?: (event: object) => void;
 };
 
@@ -123,6 +207,14 @@ const DocumentEditor = (props: DocumentEditorProps) => {
     events_onRequestUsers,
   } = props;
 
+  const onLoadRef = useRef<() => void>(() => {});
+  const onErrorRef = useRef<(errorCode: number) => void>(() => {});
+
+  useEffect(() => {
+    onLoadRef.current = onLoad;
+    onErrorRef.current = onError;
+  });
+
   useEffect(() => {
     if (window?.DocEditor?.instances[id]) {
       window.DocEditor.instances[id].destroyEditor();
@@ -146,6 +238,8 @@ const DocumentEditor = (props: DocumentEditorProps) => {
   ]);
 
   useEffect(() => {
+    let cancelled = false;
+
     let url = documentServerUrl;
     if (!url.endsWith("/")) url += "/";
 
@@ -159,10 +253,18 @@ const DocumentEditor = (props: DocumentEditorProps) => {
     }
 
     loadScript(docsApiUrl, "onlyoffice-api-script")
-      .then(() => onLoad())
-      .catch(() => onError(-2));
+      .then(() => {
+        if (cancelled) return;
+        onLoadRef.current();
+      })
+      .catch(() => {
+        if (cancelled) return;
+        onErrorRef.current(-2);
+      });
 
     return () => {
+      cancelled = true;
+
       if (window?.DocEditor?.instances[id]) {
         window.DocEditor.instances[id].destroyEditor();
         window.DocEditor.instances[id] = undefined;
@@ -293,7 +395,11 @@ const DocumentEditor = (props: DocumentEditorProps) => {
     events_onAppReady!(window.DocEditor?.instances[id] || {});
   };
 
-  return <div id={id}></div>;
+  return (
+    <div style={{ display: "contents" }}>
+      <div id={id}></div>
+    </div>
+  );
 };
 
 export default DocumentEditor;
