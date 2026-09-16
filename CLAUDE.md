@@ -40,7 +40,7 @@ E2E_LIB_VERSION=2.2.0 npm run test            # test a published npm version ins
 
 **Instance registry**: editors are tracked in the global `window.DocEditor.instances[id]`, keyed by the `id` prop — this is how the component detects duplicates, avoids double-init, and destroys on unmount. `id` must be unique per editor on the page (Storybook's preview decorator appends a timestamp to `args.id` for this reason).
 
-**Config merge order**: flat `document_*` / `editorConfig_*` / `events_*` props are assembled into a `propsConfig` object, then `Object.assign(propsConfig, cloneDeep(config))` — so the `config` object always wins over the flat legacy props. `config` is deep-cloned (lodash) because DocsAPI mutates what it is given.
+**Config merge order**: flat `document_*` / `editorConfig_*` / `events_*` props are assembled into a `propsConfig` object, then `Object.assign(propsConfig, cloneDeep(config))` — so the `config` object always wins over the flat legacy props. Every flat prop is marked `@deprecated` in `DocumentEditorProps` (the supported API is `id`, `documentServerUrl`, `shardkey`, `config`, `onLoadComponentError`) — they are still read and merged, the tags are documentation only. `config` is deep-cloned (lodash) because DocsAPI mutates what it is given.
 
 **Error codes** passed to `onLoadComponentError`: `-1` unknown, `-2` failed to load `api.js`, `-3` `DocsAPI` undefined after load. E2E tests assert these numbers; keep them stable.
 
