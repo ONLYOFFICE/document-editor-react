@@ -14,7 +14,27 @@
 * limitations under the License.
 */
 
-export { default as DocumentEditor } from "./DocumentEditor";
-export { DocumentEditorProps } from "./DocumentEditor";
-export { default as DocumentEditorPreload } from "./DocumentEditorPreload";
-export { DocumentEditorPreloadProps } from "./DocumentEditorPreload";
+import React from "react";
+
+export type DocumentEditorPreloadProps = {
+  documentServerUrl: string;
+};
+
+const DocumentEditorPreload = (props: DocumentEditorPreloadProps) => {
+  const { documentServerUrl } = props;
+
+  let url = documentServerUrl;
+  if (!url.endsWith("/")) url += "/";
+
+  return (
+    <iframe
+      src={`${url}web-apps/apps/api/documents/preload.html`}
+      title="onlyoffice-preload"
+      tabIndex={-1}
+      aria-hidden="true"
+      style={{ display: "none" }}
+    />
+  );
+};
+
+export default DocumentEditorPreload;
