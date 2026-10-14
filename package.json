@@ -74,6 +74,10 @@
     "react": "^16.9.0 || ^17 || ^18 || ^19",
     "react-dom": "^16.9.0 || ^17 || ^18 || ^19"
   },
+  "overrides": {
+    "uuid": "^11.1.1",
+    "webpack-dev-middleware": "^7.4.5"
+  },
   "main": "dist/cjs/index.js",
   "module": "dist/esm/index.js",
   "universal": "dist/umd/index.js",
