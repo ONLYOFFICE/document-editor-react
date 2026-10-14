@@ -14,14 +14,15 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
       - name: Install NodeJS
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v7
         with:
-          node-version: 24
+          node-version-file: '.nvmrc'
           registry-url: 'https://registry.npmjs.org/'
+          package-manager-cache: false
       - name: Install dependencies
-        run: npm install
+        run: npm ci
       - name: Build project
         run: npm run rollup
       - name: Publish to npm

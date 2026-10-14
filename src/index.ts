@@ -16,3 +16,5 @@
 
 export { default as DocumentEditor } from "./DocumentEditor";
 export { DocumentEditorProps } from "./DocumentEditor";
+export { default as DocumentEditorPreload } from "./DocumentEditorPreload";
+export { DocumentEditorPreloadProps } from "./DocumentEditorPreload";

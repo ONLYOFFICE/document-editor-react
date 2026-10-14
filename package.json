@@ -1,6 +1,6 @@
 {
   "name": "@onlyoffice/document-editor-react",
-  "version": "2.2.0",
+  "version": "2.3.0",
   "description": "React component for ONLYOFFICE Document Server",
   "license": "Apache-2.0",
   "bugs": {
@@ -22,6 +22,7 @@
   "scripts": {
     "rollup": "rollup -c --bundleConfigAsCjs",
     "test": "jest",
+    "test:e2e": "npm --prefix e2e ci && npm --prefix e2e run test",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build"
   },
@@ -72,6 +73,10 @@
     "@onlyoffice/doceditor-types": ">=9.3.1",
     "react": "^16.9.0 || ^17 || ^18 || ^19",
     "react-dom": "^16.9.0 || ^17 || ^18 || ^19"
+  },
+  "overrides": {
+    "uuid": "^11.1.1",
+    "webpack-dev-middleware": "^7.4.5"
   },
   "main": "dist/cjs/index.js",
   "module": "dist/esm/index.js",

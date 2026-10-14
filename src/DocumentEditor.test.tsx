@@ -15,29 +15,221 @@
 */
 
 import React from "react";
-import { render } from "@testing-library/react";
+import { act, render, waitFor } from "@testing-library/react";
+
+import type { Config } from "@onlyoffice/doceditor-types";
 
 import DocumentEditor from "./DocumentEditor";
 
+const config: Config = {
+  "document": {
+    "fileType": "docx",
+    "key": "Khirz6zTPdfd7",
+    "title": "Example Document Title.docx",
+    "url": "https://example.com/url-to-example-document.docx"
+  },
+  "documentType": "word",
+  "editorConfig": {
+    "callbackUrl": "https://example.com/url-to-callback.ashx"
+  }
+};
+
+const withKey = (key: string): Config => ({
+  ...config,
+  document: { ...config.document!, key },
+});
+
+let openedKeys: string[];
+
+const mockDocsAPI = () => {
+  window.DocsAPI = {
+    DocEditor: (id: string, editorConfig: Config) => {
+      openedKeys.push(editorConfig.document!.key!);
+
+      const target = document.getElementById(id)!;
+      const iframe = document.createElement("iframe");
+      iframe.setAttribute("name", "frameEditor");
+      target.parentNode!.replaceChild(iframe, target);
+
+      return {
+        destroyEditor: () => {
+          const placeholder = document.createElement("div");
+          placeholder.setAttribute("id", id);
+          iframe.parentNode?.replaceChild(placeholder, iframe);
+        },
+      } as any;
+    },
+  };
+};
+
+const editor = () => window.DocEditor?.instances["docxEditor"];
+
 describe("DocumentEditor", () => {
+  beforeEach(() => {
+    openedKeys = [];
+    mockDocsAPI();
+  });
+
+  afterEach(() => {
+    jest.restoreAllMocks();
+    window.DocsAPI = undefined;
+    window.DocEditor = undefined;
+  });
+
   test("renders the DocumentEditor component", () => {
     render(
       <DocumentEditor
         id="docxEditor"
         documentServerUrl="http://documentserver/"
-        config={{
-          "document": {
-            "fileType": "docx",
-            "key": "Khirz6zTPdfd7",
-            "title": "Example Document Title.docx",
-            "url": "https://example.com/url-to-example-document.docx"
-          },
-          "documentType": "word",
-          "editorConfig": {
-            "callbackUrl": "https://example.com/url-to-callback.ashx"
-          }
-        }}
+        config={config}
       />
     );
+  });
+
+  test("renders the placeholder inside a wrapper it owns", () => {
+    const { container } = render(
+      <DocumentEditor
+        id="docxEditor"
+        documentServerUrl="http://documentserver/"
+        config={config}
+      />
+    );
+
+    const wrapper = container.firstElementChild as HTMLElement;
+
+    expect(wrapper.id).toBe("");
+    expect(wrapper.style.display).toBe("contents");
+  });
+
+  test("unmounts without removing a node it does not own", async () => {
+    const { unmount } = render(
+      <DocumentEditor
+        id="docxEditor"
+        documentServerUrl="http://documentserver/"
+        config={config}
+      />
+    );
+
+    await waitFor(() => expect(editor()).toBeDefined());
+
+    expect(() => unmount()).not.toThrow();
+    expect(editor()).toBeUndefined();
+  });
+
+  test("can be mounted again after being unmounted", async () => {
+    const first = render(
+      <DocumentEditor
+        id="docxEditor"
+        documentServerUrl="http://documentserver/"
+        config={config}
+      />
+    );
+
+    await waitFor(() => expect(editor()).toBeDefined());
+    await act(async () => { first.unmount(); });
+
+    const second = render(
+      <DocumentEditor
+        id="docxEditor"
+        documentServerUrl="http://documentserver/"
+        config={config}
+      />
+    );
+
+    await waitFor(() => expect(editor()).toBeDefined());
+    expect(second.baseElement.querySelector("iframe[name='frameEditor']")).not.toBeNull();
+
+    await act(async () => { second.unmount(); });
+  });
+
+  test("does not leave an editor behind when unmounted while api.js is loading", async () => {
+    const onLoadComponentError = jest.fn();
+
+    const { unmount } = render(
+      <DocumentEditor
+        id="docxEditor"
+        documentServerUrl="http://documentserver/"
+        config={config}
+        onLoadComponentError={onLoadComponentError}
+      />
+    );
+
+    unmount();
+
+    await act(async () => { await Promise.resolve(); });
+
+    expect(openedKeys).toEqual([]);
+    expect(editor()).toBeUndefined();
+    expect(onLoadComponentError).not.toHaveBeenCalled();
+  });
+
+  test("uses the current config when it changes while api.js is loading", async () => {
+    let loaded!: () => void;
+    const docsAPI = window.DocsAPI;
+    window.DocsAPI = undefined;
+
+    const appendChild = document.body.appendChild.bind(document.body);
+
+    jest.spyOn(document.body, "appendChild").mockImplementation(((node: any) => {
+      if (node.id !== "onlyoffice-api-script") return appendChild(node);
+
+      loaded = () => {
+        window.DocsAPI = docsAPI;
+        node.onload();
+      };
+
+      return node;
+    }) as any);
+
+    const { rerender, baseElement } = render(
+      <DocumentEditor
+        id="docxEditor"
+        documentServerUrl="http://documentserver/"
+        config={config}
+      />
+    );
+
+    await act(async () => {
+      rerender(
+        <DocumentEditor
+          id="docxEditor"
+          documentServerUrl="http://documentserver/"
+          config={withKey("aNewKey")}
+        />
+      );
+    });
+
+    await act(async () => { loaded(); await Promise.resolve(); });
+
+    expect(openedKeys).toEqual(["aNewKey"]);
+    expect(baseElement.querySelector("iframe[name='frameEditor']")).not.toBeNull();
+  });
+
+  test("recreates the editor when the config changes", async () => {
+    const { rerender, baseElement } = render(
+      <DocumentEditor
+        id="docxEditor"
+        documentServerUrl="http://documentserver/"
+        config={config}
+      />
+    );
+
+    await waitFor(() => expect(editor()).toBeDefined());
+    const first = editor();
+
+    await act(async () => {
+      rerender(
+        <DocumentEditor
+          id="docxEditor"
+          documentServerUrl="http://documentserver/"
+          config={withKey("aNewKey")}
+        />
+      );
+    });
+
+    expect(editor()).toBeDefined();
+    expect(editor()).not.toBe(first);
+    expect(openedKeys).toEqual(["Khirz6zTPdfd7", "aNewKey"]);
+    expect(baseElement.querySelectorAll("iframe[name='frameEditor']")).toHaveLength(1);
   });
 });
